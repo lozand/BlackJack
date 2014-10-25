@@ -35,11 +35,21 @@ namespace BlackJack
             return Name == "A";
         }
 
+        /// <summary>
+        /// Determines whether or not this cards is worth 10
+        /// </summary>
+        /// <returns></returns>
         public bool IsTenCard()
         {
             return Name == "X" || Name == "J" || Name == "Q" || Name == "K";
         }
 
+
+        /// <summary>
+        /// Sets a number value to each card. 2-10 are set to the value on their card. J, Q, K are equal to 10 and A = 1 or 11. We may need to put rules to this, but not likely at the card level.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         private int SetNumberValue(string name)
         {
             int value = 0;

@@ -15,9 +15,8 @@ namespace BlackJack
             NumberOfDecks = numberOfDecks;
             TOTAL_CARDS = cardsInADeck * numberOfDecks;
             Initialize(numberOfDecks);
-            Shuffle();
-            Shuffle();
-            Shuffle();
+            // DAL: Do we need to shuffle more than once? I wonder if there is some theory behind shuffling and random numbers.
+            Shuffle(3);
         }
 
         #region Properties
@@ -42,6 +41,9 @@ namespace BlackJack
             DisplayNumberOfCardsRemaining();
         }
 
+        /// <summary>
+        /// Function for displaying the number of cards remaining in the deck.
+        /// </summary>
         public void DisplayNumberOfCardsRemaining()
         {
             Console.WriteLine("{0} cards remaining in this deck.", RemainingCards.Count);
@@ -67,11 +69,10 @@ namespace BlackJack
         {
             RemainingCards.Clear();
             PlayedCards.Clear();
+            // Since the below steps are completed in the constructor maybe it's worth bringing these methods out into their own method.
             TOTAL_CARDS = cardsInADeck * numberOfDecks;
             Initialize(numberOfDecks);
-            Shuffle();
-            Shuffle();
-            Shuffle();
+            Shuffle(3);
         }
 
         /// <summary>
@@ -80,7 +81,7 @@ namespace BlackJack
         /// <param name="card"></param>
         public void PlayCard(string card)
         {
-            // TODO: Add some error checking here
+            // DAL: TODO: Add some error checking here
             string name = card[0].ToString();
             char suiteInitial = card[1];
 
@@ -132,6 +133,10 @@ namespace BlackJack
             }
         }
 
+        /// <summary>
+        /// Deals the next card and returns it.
+        /// </summary>
+        /// <returns></returns>
         public Card DealNextCard()
         {
             var nextCard = RemainingCards.FirstOrDefault();
@@ -156,6 +161,11 @@ namespace BlackJack
             Console.WriteLine("Probability of drawing 10, J, Q, K, or A is: {0:0.00}%", prob);
         }
 
+        /// <summary>
+        /// Returns the probability of getting a card in the parameter. Expecting a string formatted like "JQKA" and would return the probability of getting a Jack OR a Queen OR a King OR an Ace.
+        /// </summary>
+        /// <param name="cardNames"></param>
+        /// <returns></returns>
         public double ProbabilityOfCard(string cardNames)
         {
             int totalOfTheseCards = 0;
@@ -176,7 +186,7 @@ namespace BlackJack
         /// </summary>
         public void ProbabilityOfGettingBlackJack()
         {
-            
+            // DAL: TODO: Write
         }
         #endregion
 
@@ -208,26 +218,33 @@ namespace BlackJack
         }
 
         /// <summary>
-        /// Shuffles "RemainingCards"
+        /// Shuffles "RemainingCards," i times.
         /// </summary>
-        private void Shuffle()
+        private void Shuffle(int timesToShulffle)
         {
-            Random rand = new Random();
-            List<Card> temp = new List<Card>();
-            int remaining = TOTAL_CARDS;
-            while (remaining > 0)
+            for (int i = 0; i < timesToShulffle; i++)
             {
-                Card card = RemainingCards[rand.Next(0, remaining)];
-                temp.Add(card);
-                RemainingCards.Remove(card);
-                remaining--;
+                Random rand = new Random();
+                List<Card> temp = new List<Card>();
+                int remaining = TOTAL_CARDS;
+                while (remaining > 0)
+                {
+                    Card card = RemainingCards[rand.Next(0, remaining)];
+                    temp.Add(card);
+                    RemainingCards.Remove(card);
+                    remaining--;
+                }
+                RemainingCards = temp;
             }
-
-            RemainingCards = temp;
         }
         #endregion
 
         #region Utility Methods
+        /// <summary>
+        /// I haven't found a use for this yet, but I will probably need it when calculating probabilities. I wonder if there is already a method for this in the Math class.
+        /// </summary>
+        /// <param name="num"></param>
+        /// <returns></returns>
         private int Factorial(int num)
         {
             if (num == 1)

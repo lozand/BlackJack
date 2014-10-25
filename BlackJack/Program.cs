@@ -84,7 +84,10 @@ namespace BlackJack
 
         private static void PlayTheGame(Deck deck)
         {
-            //Table table = new Table(deck);
+            List<Player> players = new List<Player>();
+            players.Add(new Player("Daniel"));
+            Table table = new Table(deck, players);
+            table.DealInitialHand();
         }
     }
 }

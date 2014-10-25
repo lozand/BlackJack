@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BlackJack.exe" size="13824">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BlackJack.exe" size="14336">
       <assemblyIdentity name="BlackJack" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>yGPi3JZu1jQAntJN1FmhP0+IGjw=</dsig:DigestValue>
+        <dsig:DigestValue>v8iCHRA2YwmCgl/jln4MT/+o5aU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

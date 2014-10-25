@@ -17,10 +17,15 @@ namespace BlackJack
         public Player Dealer { get; set; }
         public Deck Deck { get; set; }
 
+        /// <summary>
+        /// Deals this initial hand for all players. This consists of 2 cards for each player and 2 for the dealer.
+        /// Notes: One of the dealer's cards should be face down (the second one)
+        ///         Also, is there a cleaner way of doing this instead of calling DealCard twice? Is a loop really necessary here?
+        /// </summary>
         public void DealInitialHand()
         {
-            DealCard();
-            DealCard();
+            DealCard(true);
+            DealCard(false);
             CheckForBlackJack();
         }
 
@@ -29,15 +34,34 @@ namespace BlackJack
 
         }
 
-        private void DealCard()
+        /// <summary>
+        /// Deals one card to each player and then one to the dealer.
+        /// This should only be called in the initial card deal.
+        /// </summary>
+        private void DealCard(bool ShowDealerCard)
         {
             foreach (Player player in Players)
             {
-                player.Hand.Add(Deck.DealNextCard());
+                Card card = Deck.DealNextCard();
+                Console.WriteLine("Player {0} got", player.Name);
+                card.DisplayCard();
+                player.Hand.Add(card);
             }
-            Dealer.Hand.Add(Deck.DealNextCard());
+            Card dealerCard = Deck.DealNextCard();
+            Dealer.Hand.Add(dealerCard);
+            if (ShowDealerCard)
+            {
+                Console.WriteLine("Dealer got");
+                dealerCard.DisplayCard();
+            }
+            
         }
 
+        /// <summary>
+        /// After all cards have initially been dealt, we need to see who has blackjack.
+        /// Notes: In the future, there would be an instant payout here for people who got blackjack.
+        /// If the dealer gets blackjack, then all people who didn't instantly lose and those who won, now push.
+        /// </summary>
         private void CheckForBlackJack()
         {
             foreach (Player player in Players)
@@ -59,6 +83,9 @@ namespace BlackJack
 
         }
 
+        /// <summary>
+        /// Sets all players to lose unless they have won. Then they push.
+        /// </summary>
         private void SetPlayersToLose()
         {
             foreach (Player player in Players)
@@ -74,11 +101,20 @@ namespace BlackJack
             }
         }
 
+        /// <summary>
+        /// The player should now have the option of hitting, staying, splitting or doubling down. 
+        /// This function should run through the motions of the actual game of blackjack
+        /// </summary>
+        /// <param name="player"></param>
         private void PlayerPlay(Player player)
         {
             
         }
 
+        /// <summary>
+        /// Deals the next card and assigns it out.
+        /// </summary>
+        /// <returns></returns>
         private Card NextCard()
         {
             return Deck.DealNextCard();
