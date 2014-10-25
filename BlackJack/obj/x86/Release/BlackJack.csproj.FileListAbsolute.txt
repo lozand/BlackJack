@@ -1,0 +1,8 @@
+D:\Libraries\Documents\Visual Studio 2010\BlackJack\BlackJack\bin\Release\BlackJack.exe.manifest
+D:\Libraries\Documents\Visual Studio 2010\BlackJack\BlackJack\bin\Release\BlackJack.application
+D:\Libraries\Documents\Visual Studio 2010\BlackJack\BlackJack\bin\Release\BlackJack.exe
+D:\Libraries\Documents\Visual Studio 2010\BlackJack\BlackJack\bin\Release\BlackJack.pdb
+D:\Libraries\Documents\Visual Studio 2010\BlackJack\BlackJack\obj\x86\Release\BlackJack.exe.manifest
+D:\Libraries\Documents\Visual Studio 2010\BlackJack\BlackJack\obj\x86\Release\BlackJack.application
+D:\Libraries\Documents\Visual Studio 2010\BlackJack\BlackJack\obj\x86\Release\BlackJack.exe
+D:\Libraries\Documents\Visual Studio 2010\BlackJack\BlackJack\obj\x86\Release\BlackJack.pdb
