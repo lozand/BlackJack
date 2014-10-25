@@ -10,3 +10,9 @@ C:\Users\Daniel\documents\visual studio 2010\Projects\BlackJack\BlackJack\bin\De
 C:\Users\Daniel\documents\visual studio 2010\Projects\BlackJack\BlackJack\obj\x86\Debug\ResolveAssemblyReference.cache
 D:\Libraries\Documents\Visual Studio 2010\BlackJack\BlackJack\obj\x86\Debug\BlackJack.exe
 D:\Libraries\Documents\Visual Studio 2010\BlackJack\BlackJack\obj\x86\Debug\BlackJack.pdb
+D:\Libraries\Documents\Visual Studio 2010\BlackJack\BlackJack\bin\Debug\BlackJack.exe.manifest
+D:\Libraries\Documents\Visual Studio 2010\BlackJack\BlackJack\bin\Debug\BlackJack.application
+D:\Libraries\Documents\Visual Studio 2010\BlackJack\BlackJack\bin\Debug\BlackJack.exe
+D:\Libraries\Documents\Visual Studio 2010\BlackJack\BlackJack\bin\Debug\BlackJack.pdb
+D:\Libraries\Documents\Visual Studio 2010\BlackJack\BlackJack\obj\x86\Debug\BlackJack.exe.manifest
+D:\Libraries\Documents\Visual Studio 2010\BlackJack\BlackJack\obj\x86\Debug\BlackJack.application

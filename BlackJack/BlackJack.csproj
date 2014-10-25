@@ -75,7 +75,7 @@
     <Compile Include="Play.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Status.cs" />
-    <Compile Include="Suite.cs" />
+    <Compile Include="Suit.cs" />
     <Compile Include="Deck.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

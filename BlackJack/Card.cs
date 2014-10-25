@@ -7,15 +7,15 @@ namespace BlackJack
 {
     public class Card
     {
-        public Card(string name, Suite suite)
+        public Card(string name, Suit suit)
         {
             this.Name = name;
-            this.Suite = suite;
+            this.Suite = suit;
             this.NumberValue = SetNumberValue(name);
         }
         
         public string Name { get; set; }
-        public Suite Suite { get; set; }
+        public Suit Suite { get; set; }
         public int NumberValue { get; set; }
 
         /// <summary>
@@ -26,6 +26,10 @@ namespace BlackJack
             Console.WriteLine("{0} - {1}", Name, Suite.ToString());
         }
 
+        /// <summary>
+        /// Determines whether or not this card is an Ace
+        /// </summary>
+        /// <returns></returns>
         public bool IsAce()
         {
             return Name == "A";

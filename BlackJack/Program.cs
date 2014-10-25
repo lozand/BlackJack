@@ -9,7 +9,7 @@ namespace BlackJack
     {
         static void Main(string[] args)
         {
-            Deck myDeck = new Deck(3);
+            Deck myDeck = new Deck(1);
             myDeck.ShowCardsRemaining();
             Console.WriteLine("");
             string whatsNext = "Go";

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BlackJack
 {
-    public enum Suite
+    public enum Suit
     {
         Hearts = 1,
         Clubs = 2,

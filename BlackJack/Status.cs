@@ -10,6 +10,7 @@ namespace BlackJack
         Betting = 0,
         InPlay = 1,
         Won = 2,
-        Lost = 3
+        Lost = 3,
+        Push = 4
     }
 }

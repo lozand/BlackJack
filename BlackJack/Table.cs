@@ -67,6 +67,10 @@ namespace BlackJack
                 {
                     player.Status = Status.Lost;
                 }
+                else
+                {
+                    player.Status = Status.Push;
+                }
             }
         }
 

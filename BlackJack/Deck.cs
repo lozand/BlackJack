@@ -39,6 +39,12 @@ namespace BlackJack
             {
                 card.DisplayCard();
             }
+            DisplayNumberOfCardsRemaining();
+        }
+
+        public void DisplayNumberOfCardsRemaining()
+        {
+            Console.WriteLine("{0} cards remaining in this deck.", RemainingCards.Count);
         }
 
         /// <summary>
@@ -78,24 +84,24 @@ namespace BlackJack
             string name = card[0].ToString();
             char suiteInitial = card[1];
 
-            Suite suite;
+            Suit suite;
 
             switch (suiteInitial)
             {
                 case 'H':
-                    suite = Suite.Hearts;
+                    suite = Suit.Hearts;
                     break;
                 case 'D':
-                    suite = Suite.Diamonds;
+                    suite = Suit.Diamonds;
                     break;
                 case 'C':
-                    suite = Suite.Clubs;
+                    suite = Suit.Clubs;
                     break;
                 case 'S':
-                    suite = Suite.Spades;
+                    suite = Suit.Spades;
                     break;
                 default:
-                    suite = Suite.Hearts; // ?
+                    suite = Suit.Hearts; // ?
                     break;
             }
             var removeMe = RemainingCards.Where(c => c.Name == name && c.Suite == suite);
@@ -180,11 +186,11 @@ namespace BlackJack
         /// </summary>
         private void Initialize(int numberOfDecks)
         {
-            List<Suite> suites = new List<Suite>();
-            suites.Add(Suite.Hearts);
-            suites.Add(Suite.Clubs);
-            suites.Add(Suite.Diamonds);
-            suites.Add(Suite.Spades);
+            List<Suit> suites = new List<Suit>();
+            suites.Add(Suit.Hearts);
+            suites.Add(Suit.Clubs);
+            suites.Add(Suit.Diamonds);
+            suites.Add(Suit.Spades);
 
             string[] names = { "2", "3", "4", "5", "6", "7", "8", "9", "X", "J", "Q", "K", "A" };
 
