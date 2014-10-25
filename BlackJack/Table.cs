@@ -12,10 +12,12 @@ namespace BlackJack
             Dealer = new Player("Dealer");
             Deck = deck;
             Players = players;
+            TableStatus = TableStatus.Open;
         }
         public List<Player> Players { get; set; }
         public Player Dealer { get; set; }
         public Deck Deck { get; set; }
+        public TableStatus TableStatus { get; set; }
 
         /// <summary>
         /// Deals this initial hand for all players. This consists of 2 cards for each player and 2 for the dealer.
@@ -24,6 +26,7 @@ namespace BlackJack
         /// </summary>
         public void DealInitialHand()
         {
+            TableStatus = TableStatus.Dealing;
             DealCard(true);
             DealCard(false);
             CheckForBlackJack();
@@ -31,7 +34,7 @@ namespace BlackJack
 
         public void Play()
         {
-
+            TableStatus = TableStatus.InPlay;
         }
 
         /// <summary>
@@ -99,6 +102,7 @@ namespace BlackJack
                     player.Status = Status.Push;
                 }
             }
+            TableStatus = TableStatus.Finished;
         }
 
         /// <summary>
