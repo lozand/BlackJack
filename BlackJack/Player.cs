@@ -48,14 +48,38 @@ namespace BlackJack
             }
             else
             {
-                log.PlayerCards(Name);
+                if (Status == Status.Bust)
+                {
+                    log.PlayerHasBust(Name);
+                }
+                else if (Status == Status.BlackJack)
+                {
+                    log.PlayerGotBlackJack(Name);
+                }
+                else if (Status == Status.Won)
+                {
+                    log.PlayerHasWon(Name);
+                }
+                else if (Status == Status.Lost)
+                {
+                    log.PlayerResult(Name, "lost");
+                }
+                else if (Status == Status.Push && Name != "Dealer")
+                {
+                    log.PlayerHasTied(Name);
+                }
+                else
+                {
+                    log.PlayerCards(Name);
+                }
+
                 foreach (Card card in Hand)
                 {
                     card.DisplayCard();
                 }
+                log.Total(Total());
             }
-            Console.WriteLine("");
-            
+            log.SkipLine();
         }
     }
 }

@@ -11,6 +11,8 @@ namespace BlackJack
         InPlay = 1,
         Won = 2,
         Lost = 3,
-        Push = 4
+        Bust = 4,
+        Push = 5,
+        BlackJack = 6
     }
 }

@@ -13,6 +13,10 @@ namespace BlackJack
             Deck = deck;
             Players = players;
             TableStatus = TableStatus.Open;
+            DealInitialHand();
+            Play();
+            EndGame();
+            Results();
         }
         public List<Player> Players { get; set; }
         public Player Dealer { get; set; }
@@ -45,7 +49,7 @@ namespace BlackJack
             TableStatus = TableStatus.InPlay;
             foreach (Player player in Players)
             {
-                if (player.Status != Status.Won && player.Status != Status.Lost)
+                if (player.Status != Status.Won && player.Status != Status.BlackJack && player.Status != Status.Lost)
                 {
                     PlayerPlay(player);
                 }
@@ -53,7 +57,7 @@ namespace BlackJack
 
             ShowDealerCard(false);
 
-            if (!Players.All(p => p.Status == Status.Lost))
+            if (!Players.All(p => p.Status == Status.Lost || p.Status == Status.Bust))
             {
                 while (Dealer.Total() < DealerStand)
                 {
@@ -65,11 +69,11 @@ namespace BlackJack
         public void EndGame()
         {
             // If the dealer busts, then everyone who didn't bust wins.
-            if (Dealer.Status == Status.Lost)
+            if (Dealer.Status == Status.Lost || Dealer.Status == Status.Bust)
             {
                 foreach (Player player in Players)
                 {
-                    if (player.Status != Status.Lost)
+                    if (player.Status != Status.Lost && player.Status != Status.Bust)
                     {
                         player.Status = Status.Won;
                     }
@@ -77,7 +81,7 @@ namespace BlackJack
             }
             else // If the dealer didn't bust, then only those who beat the dealer win.
             {
-                foreach (Player player in Players.Where(p=>p.Status != Status.Won && p.Status != Status.Lost))
+                foreach (Player player in Players.Where(p=>p.Status != Status.Won && p.Status != Status.Lost && p.Status != Status.Bust && p.Status != Status.BlackJack))
                 {
                     int dealerTotal = Dealer.Total();
                     int playerTotal = player.Total();
@@ -99,10 +103,18 @@ namespace BlackJack
 
         public void Results()
         {
-            foreach (Player player in Players)
+            //show.Clear();
+            //foreach (Player player in Players)
+            //{
+            //    string result = GetResultString(player.Status);
+            //    player.ShowPlayerCards();
+            //    //show.PlayerResult(player.Name, result);
+            //}
+            //Dealer.ShowPlayerCards();
+            UpdateTable(false);
+            if (Dealer.Status == Status.Lost)
             {
-                string result = GetResultString(player.Status);
-                show.PlayerResult(player.Name, result);
+                show.PlayerResult(Dealer.Name, "Lost");
             }
         }
 
@@ -116,9 +128,14 @@ namespace BlackJack
                         result = "Lost";
                         Console.ForegroundColor = ConsoleColor.Red;
                         break;
+                    case Status.BlackJack:
                     case Status.Won:
                         result = "Won";
                         Console.ForegroundColor = ConsoleColor.Green;
+                        break;
+                    case Status.Bust:
+                        result = "Bust";
+                        Console.ForegroundColor = ConsoleColor.Red;
                         break;
                     case Status.Push:
                         result = "Tied";
@@ -158,8 +175,8 @@ namespace BlackJack
                 List<Card> hand = player.Hand;
                 if (hand.Any(c => c.IsAce()) && hand.Any(c => c.IsTenCard()))
                 {
-                    player.Status = Status.Won;
-                    show.PlayerWins(player.Name);
+                    player.Status = Status.BlackJack;
+                    //show.PlayerWins(player.Name);
                 }
                 else
                 {
@@ -169,9 +186,9 @@ namespace BlackJack
             List<Card> dealerHand = Dealer.Hand;
             if (dealerHand.Any(c => c.IsAce()) && dealerHand.Any(c => c.IsTenCard()))
             {
-                Dealer.Status = Status.Won;
+                Dealer.Status = Status.BlackJack;
                 SetPlayersToLose();
-                show.DealerWins();
+                //show.DealerWins();
             }
 
         }
@@ -183,7 +200,7 @@ namespace BlackJack
         {
             foreach (Player player in Players)
             {
-                if (player.Status != Status.Won)
+                if (player.Status != Status.BlackJack)
                 {
                     player.Status = Status.Lost;
                 }
@@ -207,12 +224,20 @@ namespace BlackJack
             string option = "Begin";
             while (total < 21 && option != "Stand" && player.Status == Status.InPlay)
             {
-                option = Console.ReadLine();
+                UpdateTable();
+                show.PlayerOptions(player.Name);
+                option = show.Read();
                 show.Clear();
                 switch (option)
                 {
                     case "Hit":
                         Hit(player);
+                        break;
+                    case "Double":
+                        Double(player);
+                        break;
+                    case "Split":
+                        Split(player);
                         break;
                     case "Stand":
                     default:
@@ -232,7 +257,7 @@ namespace BlackJack
 
         private void ShowDealerCard(bool hideOneCard = true)
         {
-            //Console.WriteLine("Dealer has:");
+            Console.WriteLine("Dealer has:");
             Dealer.ShowPlayerCards(hideOneCard);
         }
 
@@ -249,15 +274,31 @@ namespace BlackJack
         {
             Card card = NextCard();
             player.Hand.Add(card);
-            player.ShowPlayerCards();
+            UpdateTable();
             if (player.Total() > 21)
             {
                 show.PlayerBust();
-                player.Status = Status.Lost;
+                player.Status = Status.Bust;
             }
-            
         }
 
+        private void Split(Player player)
+        {
+        }
 
+        private void Double(Player player)
+        {
+        }
+
+        private void UpdateTable(bool hideDealerCards = true)
+        {
+            show.Clear();
+
+            foreach(Player player in Players)
+            {
+                player.ShowPlayerCards();
+            }
+            Dealer.ShowPlayerCards(hideDealerCards);
+        }
     }
 }

@@ -31,6 +31,7 @@ namespace BlackJack
                 Set("info");
             }
             Console.WriteLine("Player {0} {1}{2}", name, result, punctuation);
+            //SkipLine();
             Reset();
         }
 
@@ -43,6 +44,34 @@ namespace BlackJack
         {
             Set("bad");
             Console.WriteLine("Bust!!");
+            Reset();
+        }
+
+        public void PlayerHasBust(string name)
+        {
+            Set("bad");
+            Console.WriteLine("Player {0} bust", name);
+            Reset();
+        }
+
+        public void PlayerHasWon(string name)
+        {
+            Set("good");
+            Console.WriteLine("Player {0} won with these cards:", name);
+            Reset();
+        }
+
+        public void PlayerHasTied(string name)
+        {
+            Set("info");
+            Console.WriteLine("Player {0} tied", name);
+            Reset();
+        }
+
+        public void PlayerGotBlackJack(string name)
+        {
+            Set("good");
+            Console.WriteLine("Player {0} got Black Jack!!!", name);
             Reset();
         }
 
@@ -67,6 +96,13 @@ namespace BlackJack
             Reset();
         }
 
+        public void PlayerOptions(string name)
+        {
+            Set("info");
+            Console.WriteLine("Player {0} to move. You may Hit or Stand", name);
+            Reset();
+        }
+
         public void Card(string name, string suit)
         {
             if (suit == "Hearts" || suit == "Diamonds")
@@ -78,6 +114,13 @@ namespace BlackJack
                 Set("blackcard");
             }
             Console.WriteLine("{0} - {1}", name, suit);
+            Reset();
+        }
+
+        public void Total(int total)
+        {
+            Set("blackcard");
+            Console.WriteLine("Total: {0}", total.ToString());
             Reset();
         }
 
@@ -93,6 +136,17 @@ namespace BlackJack
             Set("question");
             Console.WriteLine("How many decks to Create?");
             Reset();
+        }
+
+        public void SkipLine()
+        {
+            Console.WriteLine("");
+        }
+
+        public string Read()
+        {
+            SkipLine();
+            return Console.ReadLine();
         }
 
         private void Set(string state = "")

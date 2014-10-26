@@ -91,12 +91,14 @@ namespace BlackJack
                 Console.WriteLine("");
                 List<Player> players = new List<Player>();
                 players.Add(new Player("Daniel"));
+                players.Add(new Player("Matt"));
                 Table table = new Table(deck, players);
-                table.DealInitialHand();
-                table.Play();
-                table.EndGame();
-                table.Results();
+                //table.DealInitialHand();
+                //table.Play();
+                //table.EndGame();
+                //table.Results();
                 Console.ResetColor();
+                Console.WriteLine("");
                 Console.Write("Play Again? y/n");
                 playAgain = Console.ReadLine();
                 display.Clear();
