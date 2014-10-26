@@ -88,6 +88,9 @@ namespace BlackJack
             players.Add(new Player("Daniel"));
             Table table = new Table(deck, players);
             table.DealInitialHand();
+            table.Play();
+
+            Console.WriteLine("Game is done");
         }
     }
 }

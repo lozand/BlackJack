@@ -27,14 +27,26 @@ namespace BlackJack
         public void DealInitialHand()
         {
             TableStatus = TableStatus.Dealing;
-            DealCard(true);
+            DealCard(false);
             DealCard(false);
             CheckForBlackJack();
+            if (TableStatus != TableStatus.Finished)
+            {
+                ShowPlayerCards();
+                ShowDealerCard();
+            }
         }
 
         public void Play()
         {
             TableStatus = TableStatus.InPlay;
+            foreach (Player player in Players)
+            {
+                if (player.Status != Status.Won && player.Status != Status.Lost)
+                {
+                    PlayerPlay(player);
+                }
+            }
         }
 
         /// <summary>
@@ -46,18 +58,10 @@ namespace BlackJack
             foreach (Player player in Players)
             {
                 Card card = Deck.DealNextCard();
-                Console.WriteLine("Player {0} got", player.Name);
-                card.DisplayCard();
                 player.Hand.Add(card);
             }
             Card dealerCard = Deck.DealNextCard();
             Dealer.Hand.Add(dealerCard);
-            if (ShowDealerCard)
-            {
-                Console.WriteLine("Dealer got");
-                dealerCard.DisplayCard();
-            }
-            
         }
 
         /// <summary>
@@ -74,6 +78,10 @@ namespace BlackJack
                 {
                     player.Status = Status.Won;
                     Console.WriteLine("Woo! Player {0} wins!!", player.Name);
+                }
+                else
+                {
+                    player.Status = Status.InPlay;
                 }
             }
             List<Card> dealerHand = Dealer.Hand;
@@ -112,7 +120,37 @@ namespace BlackJack
         /// <param name="player"></param>
         private void PlayerPlay(Player player)
         {
-            
+            int total = player.Total();
+
+            string option = "Begin";
+            while (total < 21 && option != "Stand" && player.Status == Status.InPlay)
+            {
+                option = Console.ReadLine();
+                switch (option)
+                {
+                    case "Hit":
+                        Hit(player);
+                        break;
+                    case "Stand":
+                    default:
+                        option = "Stand";
+                        break;
+                }
+            }
+        }
+
+        private void ShowPlayerCards()
+        {
+            foreach (Player player in Players)
+            {
+                player.ShowPlayerCards();
+            }
+        }
+
+        private void ShowDealerCard()
+        {
+            Console.WriteLine("Dealer has:");
+            Dealer.ShowPlayerCards(true);
         }
 
         /// <summary>
@@ -123,6 +161,20 @@ namespace BlackJack
         {
             return Deck.DealNextCard();
         }
+
+        private void Hit(Player player)
+        {
+            Card card = NextCard();
+            player.Hand.Add(card);
+            player.ShowPlayerCards();
+            if (player.Total() > 21)
+            {
+                Console.WriteLine("Bust!!");
+                player.Status = Status.Lost;
+            }
+            
+        }
+
 
     }
 }
