@@ -26,6 +26,7 @@ namespace BlackJack
         public int TOTAL_CARDS = 0;
         public int cardsInADeck = 52;
         private int NumberOfDecks;
+        private Display show = new Display();
         #endregion
 
         #region Public Methods
@@ -46,7 +47,7 @@ namespace BlackJack
         /// </summary>
         public void DisplayNumberOfCardsRemaining()
         {
-            Console.WriteLine("{0} cards remaining in this deck.", RemainingCards.Count);
+            show.CardsRemaining(RemainingCards.Count);
         }
 
         /// <summary>
@@ -105,7 +106,7 @@ namespace BlackJack
                     suite = Suit.Hearts; // ?
                     break;
             }
-            var removeMe = RemainingCards.Where(c => c.Name == name && c.Suite == suite);
+            var removeMe = RemainingCards.Where(c => c.Name == name && c.Suit == suite);
             if(removeMe.FirstOrDefault() != null)
             {
                 RemainingCards.Remove(removeMe.FirstOrDefault());

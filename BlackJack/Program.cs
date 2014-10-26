@@ -9,8 +9,9 @@ namespace BlackJack
     {
         static void Main(string[] args)
         {
-            Deck myDeck = new Deck(1);
-            myDeck.ShowCardsRemaining();
+            Deck myDeck = new Deck(3);
+            Display show = new Display();
+            //myDeck.ShowCardsRemaining();
             Console.WriteLine("");
             string whatsNext = "Go";
             const string Exit = "exit",
@@ -35,13 +36,13 @@ namespace BlackJack
                         Program.PlayCard(myDeck);
                         break;
                     case Reset:
-                        Program.Reset(myDeck);
+                        Program.Reset(myDeck, show);
                         break;
                     case ShowCards:
                         Program.ShowCards(myDeck);
                         break;
                     case PlayGame:
-                        Program.PlayTheGame(myDeck);
+                        Program.PlayTheGame(myDeck, show);
                         break;
                     default:
                         Console.WriteLine("You must enter one of the following keywords: {0}, {1}, {2}, {3}, {4}, or {5}.", Deal, ProbabilityOfHighCard, PlayCard, Reset, ShowCards, Exit);
@@ -63,9 +64,9 @@ namespace BlackJack
             deck.ShowCardsRemaining();
         }
 
-        private static void Reset(Deck deck)
+        private static void Reset(Deck deck, Display show) // This is so dumb.
         {
-            Console.WriteLine("How many decks to Create?");
+            show.AskDecksToCreate();
             string decks = Console.ReadLine();
             deck.Reset(Int16.Parse(decks));
         }
@@ -82,7 +83,7 @@ namespace BlackJack
             deck.ProbabilityOfHighCard();
         }
 
-        private static void PlayTheGame(Deck deck)
+        private static void PlayTheGame(Deck deck, Display display)
         {
             string playAgain = "y";
             while (playAgain == "y")
@@ -98,6 +99,7 @@ namespace BlackJack
                 Console.ResetColor();
                 Console.Write("Play Again? y/n");
                 playAgain = Console.ReadLine();
+                display.Clear();
             }
 
             Console.WriteLine("Game is done");

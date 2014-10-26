@@ -11,12 +11,14 @@ namespace BlackJack
         {
             Name = name;
             Hand = new List<Card>();
+            AcesReduced = false;
         }
         public string Name { get; set; }
         public List<Card> Hand { get; set; }
         public Status Status { get; set; }
 
-        private bool AcesReduced = false;
+        bool AcesReduced = false;
+        private Display log = new Display();
 
         public int Total()
         {
@@ -46,7 +48,7 @@ namespace BlackJack
             }
             else
             {
-                Console.WriteLine("Player {0} has these cards", Name);
+                log.PlayerCards(Name);
                 foreach (Card card in Hand)
                 {
                     card.DisplayCard();

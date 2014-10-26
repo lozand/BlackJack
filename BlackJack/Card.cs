@@ -10,20 +10,22 @@ namespace BlackJack
         public Card(string name, Suit suit)
         {
             this.Name = name;
-            this.Suite = suit;
+            this.Suit = suit;
             this.NumberValue = SetNumberValue(name);
         }
         
         public string Name { get; set; }
-        public Suit Suite { get; set; }
+        public Suit Suit { get; set; }
         public int NumberValue { get; set; }
+
+        Display show = new Display();
 
         /// <summary>
         /// Display function. Shows card in format "2 - Hearts" or "X - Clubs"
         /// </summary>
         public void DisplayCard()
         {
-            Console.WriteLine("{0} - {1}", Name, Suite.ToString());
+            show.Card(Name, Suit.ToString());
         }
 
         /// <summary>
