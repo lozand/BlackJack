@@ -84,11 +84,21 @@ namespace BlackJack
 
         private static void PlayTheGame(Deck deck)
         {
-            List<Player> players = new List<Player>();
-            players.Add(new Player("Daniel"));
-            Table table = new Table(deck, players);
-            table.DealInitialHand();
-            table.Play();
+            string playAgain = "y";
+            while (playAgain == "y")
+            {
+                Console.WriteLine("");
+                List<Player> players = new List<Player>();
+                players.Add(new Player("Daniel"));
+                Table table = new Table(deck, players);
+                table.DealInitialHand();
+                table.Play();
+                table.EndGame();
+                table.Results();
+                Console.ResetColor();
+                Console.Write("Play Again? y/n");
+                playAgain = Console.ReadLine();
+            }
 
             Console.WriteLine("Game is done");
         }

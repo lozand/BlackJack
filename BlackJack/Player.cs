@@ -38,9 +38,9 @@ namespace BlackJack
             return total;
         }
 
-        public void ShowPlayerCards(bool showOneCard = false)
+        public void ShowPlayerCards(bool hideOneCard = false)
         {
-            if (showOneCard)
+            if (hideOneCard)
             {
                 Hand.First().DisplayCard();
             }
