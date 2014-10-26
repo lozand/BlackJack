@@ -123,7 +123,7 @@ namespace BlackJack
             Reset();
         }
 
-        public void Card(string name, string suit)
+        public void Card(string name, string suit, string suitSymbol)
         {
             if (suit == "Hearts" || suit == "Diamonds")
             {
@@ -133,7 +133,7 @@ namespace BlackJack
             {
                 Set("blackcard");
             }
-            Console.WriteLine("{0} - {1}", name, suit);
+            Console.WriteLine("{0} - {1}", name, suitSymbol);
             Reset();
         }
 
@@ -155,6 +155,13 @@ namespace BlackJack
         {
             Set("question");
             Console.WriteLine("How many decks to Create?");
+            Reset();
+        }
+
+        public void ProbabilityOfCards(double probability)
+        {
+            Set(info);
+            Console.WriteLine("Probability of getting these cards is {0}%.", probability);
             Reset();
         }
 

@@ -34,6 +34,7 @@ namespace BlackJack
         public void ClearBet()
         {
             Bet = 0;
+            AcesReduced = false;
         }
 
         public void PushBet()
@@ -96,6 +97,10 @@ namespace BlackJack
                 else if (Status == Status.Lost)
                 {
                     log.PlayerResult(Name, "lost");
+                }
+                else if (Status == Status.BlackJack)
+                {
+                    log.PlayerHasWon(Name, Bet * 1.5);
                 }
                 else if (Status == Status.Push && Name != "Dealer")
                 {

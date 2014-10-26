@@ -12,10 +12,12 @@ namespace BlackJack
             this.Name = name;
             this.Suit = suit;
             this.NumberValue = SetNumberValue(name);
+            this.SuitSymbol = SetSuitSymbol(suit);
         }
         
         public string Name { get; set; }
         public Suit Suit { get; set; }
+        public char SuitSymbol { get; set; }
         public int NumberValue { get; set; }
 
         Display show = new Display();
@@ -25,7 +27,7 @@ namespace BlackJack
         /// </summary>
         public void DisplayCard()
         {
-            show.Card(Name, Suit.ToString());
+            show.Card(Name, Suit.ToString(), SuitSymbol.ToString());
         }
 
         /// <summary>
@@ -71,6 +73,23 @@ namespace BlackJack
                     break;
             }
             return value;
+        }
+
+        private char SetSuitSymbol(Suit suit)
+        {
+            switch (suit)
+            {
+                case Suit.Hearts:
+                    return '\x03';
+                case Suit.Clubs:
+                    return '\x05';
+                case Suit.Diamonds:
+                    return '\x04';
+                case Suit.Spades:
+                    return '\x06';
+                default:
+                    return 'N';
+            }
         }
     }
 }

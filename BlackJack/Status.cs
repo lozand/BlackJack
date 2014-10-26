@@ -13,6 +13,7 @@ namespace BlackJack
         Lost = 3,
         Bust = 4,
         Push = 5,
-        BlackJack = 6
+        BlackJack = 6,
+        NotPlaying = 7
     }
 }
