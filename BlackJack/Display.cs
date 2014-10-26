@@ -11,24 +11,30 @@ namespace BlackJack
         {
         }
 
-        // I'd like to move all or most of the methods that touch the Console class to be in here. 
         // DAL: TODO: This class should be interface'd.
+
+        const string good = "good",
+            bad = "bad",
+            info = "info",
+            blackCard = "blackcard",
+            redCard = "redcard",
+            question = "question";
 
         public void PlayerResult(string name, string result)
         {
             string punctuation = ".";
             if (result.ToLower() == "won")
             {
-                Set("good");
+                Set(good);
                 punctuation = "!";
             }
             else if (result.ToLower() == "lost")
             {
-                Set("bad");
+                Set(bad);
             }
             else
             {
-                Set("info");
+                Set(info);
             }
             Console.WriteLine("Player {0} {1}{2}", name, result, punctuation);
             //SkipLine();
@@ -42,42 +48,49 @@ namespace BlackJack
 
         public void PlayerBust()
         {
-            Set("bad");
+            Set(bad);
             Console.WriteLine("Bust!!");
             Reset();
         }
 
-        public void PlayerHasBust(string name)
+        public void PlayerHasBust(string name, double bet)
         {
-            Set("bad");
-            Console.WriteLine("Player {0} bust", name);
+            Set(bad);
+            Console.WriteLine("Player {0} bust and lost ${1}", name, bet);
             Reset();
         }
 
-        public void PlayerHasWon(string name)
+        public void PlayerHasWon(string name, double bet)
         {
-            Set("good");
-            Console.WriteLine("Player {0} won with these cards:", name);
+            Set(good);
+            Console.WriteLine("Player {0} won ${1} with these cards:", name, bet);
             Reset();
         }
 
         public void PlayerHasTied(string name)
         {
-            Set("info");
+            Set(info);
             Console.WriteLine("Player {0} tied", name);
             Reset();
         }
 
-        public void PlayerGotBlackJack(string name)
+        public void PlayerGotBlackJack(string name, double bet)
         {
-            Set("good");
-            Console.WriteLine("Player {0} got Black Jack!!!", name);
+            Set(good);
+            Console.WriteLine("Player {0} got Black Jack and won ${1}!!!", name, bet);
+            Reset();
+        }
+
+        public void PlayerCash(string name, double cash)
+        {
+            Set(info);
+            Console.WriteLine("Player {0} has ${1} now.", name, cash);
             Reset();
         }
 
         public void DealerWins()
         {
-            Set("bad");
+            Set(bad);
             Console.WriteLine("Oh no! Dealer wins!!");
             Reset();
         }
@@ -99,7 +112,14 @@ namespace BlackJack
         public void PlayerOptions(string name)
         {
             Set("info");
-            Console.WriteLine("Player {0} to move. You may Hit or Stand", name);
+            Console.WriteLine("Player {0} to move. You may Hit, Stand or Double", name);
+            Reset();
+        }
+
+        public void PlayerBet(string name)
+        {
+            Set(question);
+            Console.WriteLine("How much does Player {0} want to bet?", name);
             Reset();
         }
 
@@ -153,23 +173,23 @@ namespace BlackJack
         {
             switch (state.ToLower())
             {
-                case "good":
+                case good:
                     Console.ForegroundColor = ConsoleColor.Green;
                     break;
-                case "bad":
+                case bad:
                     Console.ForegroundColor = ConsoleColor.Red;
                     break;
-                case "info":
-                    Console.ForegroundColor = ConsoleColor.Blue;
+                case info:
+                    Console.ForegroundColor = ConsoleColor.Cyan;
                     break;
-                case "question":
+                case question:
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     break;
-                case "redcard":
+                case redCard:
                     Console.BackgroundColor = ConsoleColor.White;
                     Console.ForegroundColor = ConsoleColor.Red;
                     break;
-                case "blackcard":
+                case blackCard:
                     Console.BackgroundColor = ConsoleColor.White;
                     Console.ForegroundColor = ConsoleColor.Black;
                     break;

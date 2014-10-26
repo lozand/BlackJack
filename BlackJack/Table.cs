@@ -9,14 +9,17 @@ namespace BlackJack
     {
         public Table(Deck deck, List<Player> players)
         {
-            Dealer = new Player("Dealer");
+            Dealer = new Player("Dealer", 0);
             Deck = deck;
             Players = players;
             TableStatus = TableStatus.Open;
+            ShuffleIfNecessary();
+            SetBets();
             DealInitialHand();
             Play();
             EndGame();
             Results();
+            ClearHand();
         }
         public List<Player> Players { get; set; }
         public Player Dealer { get; set; }
@@ -24,8 +27,19 @@ namespace BlackJack
         public TableStatus TableStatus { get; set; }
 
         private const int DealerStand = 17;
+        private const int CardsNecessaryToPlay = 20;
         private Display show = new Display();
 
+        #region Public Methods
+        public void SetBets()
+        {
+            foreach (Player player in Players)
+            {
+                player.ClearBet();
+                show.PlayerBet(player.Name);
+                player.BetCash(Int32.Parse(show.Read()));
+            }
+        }
         /// <summary>
         /// Deals this initial hand for all players. This consists of 2 cards for each player and 2 for the dealer.
         /// Notes: One of the dealer's cards should be face down (the second one)
@@ -76,6 +90,7 @@ namespace BlackJack
                     if (player.Status != Status.Lost && player.Status != Status.Bust)
                     {
                         player.Status = Status.Won;
+                        player.AwardBet();
                     }
                 }
             }
@@ -88,10 +103,12 @@ namespace BlackJack
                     if (playerTotal > dealerTotal)
                     {
                         player.Status = Status.Won;
+                        player.AwardBet();
                     }
                     else if (playerTotal == dealerTotal)
                     {
                         player.Status = Status.Push;
+                        player.PushBet();
                     }
                     else
                     {
@@ -103,14 +120,6 @@ namespace BlackJack
 
         public void Results()
         {
-            //show.Clear();
-            //foreach (Player player in Players)
-            //{
-            //    string result = GetResultString(player.Status);
-            //    player.ShowPlayerCards();
-            //    //show.PlayerResult(player.Name, result);
-            //}
-            //Dealer.ShowPlayerCards();
             UpdateTable(false);
             if (Dealer.Status == Status.Lost)
             {
@@ -118,8 +127,18 @@ namespace BlackJack
             }
         }
 
-        private string GetResultString(Status status)
+        public void ClearHand()
         {
+            foreach (Player player in Players)
+            {
+                player.Hand = new List<Card>();
+            }
+        }
+        #endregion
+
+        #region Private Methods
+        private string GetResultString(Status status)
+        {            
             Console.ResetColor();
             string result = "";
             switch(status)
@@ -176,7 +195,7 @@ namespace BlackJack
                 if (hand.Any(c => c.IsAce()) && hand.Any(c => c.IsTenCard()))
                 {
                     player.Status = Status.BlackJack;
-                    //show.PlayerWins(player.Name);
+                    player.AwardBet(true);
                 }
                 else
                 {
@@ -222,7 +241,7 @@ namespace BlackJack
             int total = player.Total();
 
             string option = "Begin";
-            while (total < 21 && option != "Stand" && player.Status == Status.InPlay)
+            while (total < 21 && option != "Stand" && option != "Double" && player.Status == Status.InPlay)
             {
                 UpdateTable();
                 show.PlayerOptions(player.Name);
@@ -234,7 +253,10 @@ namespace BlackJack
                         Hit(player);
                         break;
                     case "Double":
-                        Double(player);
+                        // If the double was not successful, then you should go through the loop again
+                        // DAL: TODO: Should find a way to relay a "fail" to the user since UpdateTable() 
+                        // clears all messages. 
+                        if (!Double(player)) { option = "Failed"; } 
                         break;
                     case "Split":
                         Split(player);
@@ -259,6 +281,14 @@ namespace BlackJack
         {
             Console.WriteLine("Dealer has:");
             Dealer.ShowPlayerCards(hideOneCard);
+        }
+
+        private void ShuffleIfNecessary()
+        {
+            if (Deck.GetCardsRemaining() < CardsNecessaryToPlay)
+            {
+                Deck.Reset(Deck.NumberOfDecks);
+            }
         }
 
         /// <summary>
@@ -286,8 +316,16 @@ namespace BlackJack
         {
         }
 
-        private void Double(Player player)
+        private bool Double(Player player)
         {
+            bool doubleSuccess = false;
+            if (player.Cash > player.Bet)
+            {
+                player.BetCash(player.Bet);
+                Hit(player);
+                doubleSuccess = true;
+            }
+            return doubleSuccess;
         }
 
         private void UpdateTable(bool hideDealerCards = true)
@@ -300,5 +338,6 @@ namespace BlackJack
             }
             Dealer.ShowPlayerCards(hideDealerCards);
         }
+        #endregion
     }
 }

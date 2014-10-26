@@ -22,10 +22,9 @@ namespace BlackJack
         #region Properties
         public List<Card> RemainingCards = new List<Card>();
         public List<Card> PlayedCards = new List<Card>();
-        public int NumberOfCardsLeft { get; set; }
         public int TOTAL_CARDS = 0;
         public int cardsInADeck = 52;
-        private int NumberOfDecks;
+        public int NumberOfDecks;
         private Display show = new Display();
         #endregion
 
@@ -48,6 +47,11 @@ namespace BlackJack
         public void DisplayNumberOfCardsRemaining()
         {
             show.CardsRemaining(RemainingCards.Count);
+        }
+
+        public int GetCardsRemaining()
+        {
+            return RemainingCards.Count;
         }
 
         /// <summary>

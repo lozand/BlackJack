@@ -86,21 +86,25 @@ namespace BlackJack
         private static void PlayTheGame(Deck deck, Display display)
         {
             string playAgain = "y";
+            
+            Console.WriteLine("");
+            List<Player> players = new List<Player>();
+            players.Add(new Player("Daniel",500));
+            players.Add(new Player("Matt",500));
+            players.Add(new Player("John",500));
+            players.Add(new Player("Ruben",500));
             while (playAgain == "y")
             {
-                Console.WriteLine("");
-                List<Player> players = new List<Player>();
-                players.Add(new Player("Daniel"));
-                players.Add(new Player("Matt"));
                 Table table = new Table(deck, players);
-                //table.DealInitialHand();
-                //table.Play();
-                //table.EndGame();
-                //table.Results();
-                Console.ResetColor();
-                Console.WriteLine("");
-                Console.Write("Play Again? y/n");
-                playAgain = Console.ReadLine();
+                
+                display.SkipLine();
+                foreach (Player player in players)
+                {
+                    player.ShowPlayerCash();
+                }
+                display.SkipLine();
+                Console.Write("Play Again? y/n  ");
+                playAgain = display.Read();
                 display.Clear();
             }
 
