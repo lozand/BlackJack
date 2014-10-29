@@ -78,7 +78,11 @@ namespace BlackJack
         {
             if (hideOneCard)
             {
-                Hand.First().DisplayCard();
+                log.DealerCard(Name);
+                if (Hand.FirstOrDefault() != null)
+                {
+                    Hand.First().DisplayCard();
+                }
             }
             else
             {

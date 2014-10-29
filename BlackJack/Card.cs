@@ -75,6 +75,11 @@ namespace BlackJack
             return value;
         }
 
+        /// <summary>
+        /// Returns the ascii symbol for whichever suit is passed in. Will return 'N' for anything not a suit.
+        /// </summary>
+        /// <param name="suit"></param>
+        /// <returns></returns>
         private char SetSuitSymbol(Suit suit)
         {
             switch (suit)

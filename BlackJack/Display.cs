@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace BlackJack
 {
@@ -109,6 +110,13 @@ namespace BlackJack
             Reset();
         }
 
+        public void DealerCard(string name)
+        {
+            Set("info");
+            Console.WriteLine("{0} has these cards", name);
+            Reset();
+        }
+
         public void PlayerOptions(string name)
         {
             Set("info");
@@ -174,6 +182,11 @@ namespace BlackJack
         {
             SkipLine();
             return Console.ReadLine();
+        }
+
+        public void Wait()
+        {
+            Thread.Sleep(500);
         }
 
         private void Set(string state = "")

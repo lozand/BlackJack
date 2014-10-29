@@ -148,6 +148,7 @@ namespace BlackJack
             foreach (Player player in Players)
             {
                 player.Hand = new List<Card>();
+                player.Status = Status.InPlay;
             }
         }
         #endregion
@@ -195,6 +196,8 @@ namespace BlackJack
                 {
                     Card card = Deck.DealNextCard();
                     player.Hand.Add(card);
+                    UpdateTable(true, true);
+                    show.Wait();
                 }
             }
             Card dealerCard = Deck.DealNextCard();
