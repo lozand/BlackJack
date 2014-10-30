@@ -147,7 +147,7 @@ namespace BlackJack
         {
             foreach (Player player in Players)
             {
-                player.Hand = new List<Card>();
+                player.Hand = new List<List<Card>>();
                 player.Status = Status.InPlay;
             }
         }
@@ -195,13 +195,13 @@ namespace BlackJack
                 if (player.Status != Status.NotPlaying)
                 {
                     Card card = Deck.DealNextCard();
-                    player.Hand.Add(card);
+                    player.Hands.First().Add(card);
                     UpdateTable(true, true);
                     show.Wait();
                 }
             }
             Card dealerCard = Deck.DealNextCard();
-            Dealer.Hand.Add(dealerCard);
+            Dealer.Hands.First().Add(dealerCard);
         }
 
         /// <summary>
@@ -215,8 +215,8 @@ namespace BlackJack
             {
                 if (player.Status != Status.NotPlaying)
                 {
-                    List<Card> hand = player.Hand;
-                    if (hand.Any(c => c.IsAce()) && hand.Any(c => c.IsTenCard()))
+                    List<Hand> hand = player.Hands;
+                    if (hand.First().Any(c => c.IsAce()) && hand.First().Any(c => c.IsTenCard()))
                     {
                         player.Status = Status.BlackJack;
                         player.AwardBet(true);
@@ -227,8 +227,8 @@ namespace BlackJack
                     }
                 }
             }
-            List<Card> dealerHand = Dealer.Hand;
-            if (dealerHand.Any(c => c.IsAce()) && dealerHand.Any(c => c.IsTenCard()))
+            List<Hand> dealerHand = Dealer.Hands;
+            if (dealerHand.First().Any(c => c.IsAce()) && dealerHand.First().Any(c => c.IsTenCard()))
             {
                 Dealer.Status = Status.BlackJack;
                 SetPlayersToLose();
@@ -337,7 +337,7 @@ namespace BlackJack
         private void Hit(Player player)
         {
             Card card = NextCard();
-            player.Hand.Add(card);
+            player.Hands.Add(card);
             UpdateTable();
             if (player.Total() > 21)
             {

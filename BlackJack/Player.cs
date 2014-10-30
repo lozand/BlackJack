@@ -10,17 +10,16 @@ namespace BlackJack
         public Player(string name, double cash)
         {
             Name = name;
-            Hand = new List<Card>();
-            AcesReduced = false;
+            Hands = new List<Hand>();
             Cash = cash;
         }
         public string Name { get; set; }
-        public List<Card> Hand { get; set; }
+        public List<Hand> Hands { get; set; }
         public Status Status { get; set; }
         public double Bet { get; set; }
         public double Cash { get; set; }
 
-        bool AcesReduced = false;
+        
         private Display log = new Display();
         double payout = 2;
         double blackJackPayout = 2.5;
@@ -34,7 +33,10 @@ namespace BlackJack
         public void ClearBet()
         {
             Bet = 0;
-            AcesReduced = false;
+            foreach (Hand hand in Hands)
+            {
+                hand.ResetAces();
+            }
         }
 
         public void PushBet()
@@ -54,34 +56,34 @@ namespace BlackJack
             }
         }
 
-        public int Total()
-        {
-            int total = 0;
-            Hand.ForEach(c=>{
-                total += c.NumberValue;
-            });
-            if(total > 21 && !AcesReduced)
-            {
-                foreach(Card card in Hand)
-                {
-                    if(card.Name == "A" && card.NumberValue == 11 && !AcesReduced)
-                    {
-                        card.NumberValue -= 10;
-                        AcesReduced = true;
-                    }
-                }
-            }
-            return total;
-        }
+        //public int Total()
+        //{
+        //    int total = 0;
+        //    Hands.ForEach(c=>{
+        //        total += c.NumberValue;
+        //    });
+        //    if(total > 21 && !AcesReduced)
+        //    {
+        //        foreach(Card card in Hand)
+        //        {
+        //            if(card.Name == "A" && card.NumberValue == 11 && !AcesReduced)
+        //            {
+        //                card.NumberValue -= 10;
+        //                AcesReduced = true;
+        //            }
+        //        }
+        //    }
+        //    return total;
+        //}
 
         public void ShowPlayerCards(bool hideOneCard = false)
         {
             if (hideOneCard)
             {
                 log.DealerCard(Name);
-                if (Hand.FirstOrDefault() != null)
+                if (Hands.FirstOrDefault() != null)
                 {
-                    Hand.First().DisplayCard();
+                    Hands.First().First().DisplayCard();
                 }
             }
             else

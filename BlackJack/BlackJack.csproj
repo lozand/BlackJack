@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="Card.cs" />
     <Compile Include="Display.cs" />
+    <Compile Include="Hand.cs" />
     <Compile Include="Play.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Status.cs" />
