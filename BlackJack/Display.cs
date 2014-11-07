@@ -24,21 +24,28 @@ namespace BlackJack
         public void PlayerResult(string name, string result)
         {
             string punctuation = ".";
-            if (result.ToLower() == "won")
+            if (name == "Dealer")
             {
-                Set(good);
-                punctuation = "!";
-            }
-            else if (result.ToLower() == "lost")
-            {
-                Set(bad);
+                if (result == "bust") { Set(good); } else { Set(info); }
+                Console.WriteLine("Dealer {0}", result);
             }
             else
             {
-                Set(info);
+                if (result.ToLower() == "won")
+                {
+                    Set(good);
+                    punctuation = "!";
+                }
+                else if (result.ToLower() == "lost")
+                {
+                    Set(bad);
+                }
+                else
+                {
+                    Set(info);
+                }
+                Console.WriteLine("Player {0} {1}{2}", name, result, punctuation);
             }
-            Console.WriteLine("Player {0} {1}{2}", name, result, punctuation);
-            //SkipLine();
             Reset();
         }
 

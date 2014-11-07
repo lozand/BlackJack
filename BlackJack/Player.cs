@@ -11,11 +11,12 @@ namespace BlackJack
         {
             Name = name;
             Hands = new List<Hand>();
+            Hands.Add(new Hand());
             Cash = cash;
         }
         public string Name { get; set; }
         public List<Hand> Hands { get; set; }
-        public Status Status { get; set; }
+        public PlayerStatus Status { get; set; }
         public double Bet { get; set; }
         public double Cash { get; set; }
 
@@ -56,72 +57,71 @@ namespace BlackJack
             }
         }
 
-        //public int Total()
-        //{
-        //    int total = 0;
-        //    Hands.ForEach(c=>{
-        //        total += c.NumberValue;
-        //    });
-        //    if(total > 21 && !AcesReduced)
-        //    {
-        //        foreach(Card card in Hand)
-        //        {
-        //            if(card.Name == "A" && card.NumberValue == 11 && !AcesReduced)
-        //            {
-        //                card.NumberValue -= 10;
-        //                AcesReduced = true;
-        //            }
-        //        }
-        //    }
-        //    return total;
-        //}
-
         public void ShowPlayerCards(bool hideOneCard = false)
         {
-            if (hideOneCard)
+            if (hideOneCard) // This should be set to true only if the player is the dealer AND all players have played.
             {
                 log.DealerCard(Name);
-                if (Hands.FirstOrDefault() != null)
+                if (Hands.FirstOrDefault().Cards.FirstOrDefault() != null)
                 {
-                    Hands.First().First().DisplayCard();
+                    Hands.First().Cards.First().DisplayCard();
                 }
             }
             else
             {
-                if (Status == Status.Bust)
+                foreach (Hand hand in Hands)
                 {
-                    log.PlayerHasBust(Name, Bet);
-                }
-                else if (Status == Status.BlackJack)
-                {
-                    log.PlayerGotBlackJack(Name, Bet);
-                }
-                else if (Status == Status.Won)
-                {
-                    log.PlayerHasWon(Name, Bet);
-                }
-                else if (Status == Status.Lost)
-                {
-                    log.PlayerResult(Name, "lost");
-                }
-                else if (Status == Status.BlackJack)
-                {
-                    log.PlayerHasWon(Name, Bet * 1.5);
-                }
-                else if (Status == Status.Push && Name != "Dealer")
-                {
-                    log.PlayerHasTied(Name);
-                }
-                else
-                {
-                    log.PlayerCards(Name);
-                }
+                    if (Name != "Dealer")
+                    {
+                        if (hand.Status == HandStatus.Bust)
+                        {
+                            log.PlayerHasBust(Name, Bet);
+                        }
+                        else if (hand.Status == HandStatus.BlackJack)
+                        {
+                            log.PlayerGotBlackJack(Name, Bet);
+                        }
+                        else if (hand.Status == HandStatus.Won)
+                        {
+                            log.PlayerHasWon(Name, Bet);
+                        }
+                        else if (hand.Status == HandStatus.Lost)
+                        {
+                            log.PlayerResult(Name, "lost");
+                        }
+                        else if (hand.Status == HandStatus.BlackJack)
+                        {
+                            log.PlayerHasWon(Name, Bet * 1.5);
+                        }
+                        else if (hand.Status == HandStatus.Push && Name != "Dealer")
+                        {
+                            log.PlayerHasTied(Name);
+                        }
+                        else
+                        {
+                            log.PlayerCards(Name);
+                        }
+                    }
+                    else
+                    {
+                        if (hand.Status == HandStatus.Bust)
+                        {
+                            log.PlayerResult(Name, "bust");
+                        }
+                        else
+                        {
+                            log.PlayerCards(Name);
+                        }
+                    }
 
-                foreach (Card card in Hand)
-                {
-                    card.DisplayCard();
+                    foreach (Card card in hand.Cards)
+                    {
+                        card.DisplayCard();
+                    }
+
+                    log.Total(hand.Total());
+                    
                 }
-                log.Total(Total());
             }
             log.SkipLine();
         }

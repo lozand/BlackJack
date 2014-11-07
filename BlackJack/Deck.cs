@@ -28,42 +28,10 @@ namespace BlackJack
         private Display show = new Display();
         #endregion
 
-        #region Public Methods
-        /// <summary>
-        /// Display function to show which cards are left in the deck
-        /// </summary>
-        public void ShowCardsRemaining()
-        {
-            foreach (Card card in RemainingCards)
-            {
-                card.DisplayCard();
-            }
-            DisplayNumberOfCardsRemaining();
-        }
-
-        /// <summary>
-        /// Function for displaying the number of cards remaining in the deck.
-        /// </summary>
-        public void DisplayNumberOfCardsRemaining()
-        {
-            show.CardsRemaining(RemainingCards.Count);
-        }
-
+        #region Public/General Methods
         public int GetCardsRemaining()
         {
             return RemainingCards.Count;
-        }
-
-        /// <summary>
-        /// Removes the top x cards in the deck and displays their values
-        /// </summary>
-        /// <param name="cardsToDeal"></param>
-        public void DealCards(int cardsToDeal, bool showCards)
-        {
-            for (int i = 0; i < cardsToDeal; i++)
-            {
-                PlayNextCard(showCards);
-            }
         }
 
         /// <summary>
@@ -81,64 +49,6 @@ namespace BlackJack
         }
 
         /// <summary>
-        /// "Plays" a card. Removes the "card" from the RemainingCards and Adds to the PlayedCards prop. Expects "card" in string[2] like 2H for 2 of hearts and XC for 10 of clubs.
-        /// </summary>
-        /// <param name="card"></param>
-        public void PlayCard(string card)
-        {
-            // DAL: TODO: Add some error checking here
-            string name = card[0].ToString();
-            char suiteInitial = card[1];
-
-            Suit suite;
-
-            switch (suiteInitial)
-            {
-                case 'H':
-                    suite = Suit.Hearts;
-                    break;
-                case 'D':
-                    suite = Suit.Diamonds;
-                    break;
-                case 'C':
-                    suite = Suit.Clubs;
-                    break;
-                case 'S':
-                    suite = Suit.Spades;
-                    break;
-                default:
-                    suite = Suit.Hearts; // ?
-                    break;
-            }
-            var removeMe = RemainingCards.Where(c => c.Name == name && c.Suit == suite);
-            if(removeMe.FirstOrDefault() != null)
-            {
-                RemainingCards.Remove(removeMe.FirstOrDefault());
-                PlayedCards.Add(new Card(name, suite));
-            }
-            else
-            {
-                Console.WriteLine("This card is not in the deck");
-            }
-        }
-
-        /// <summary>
-        /// Plays the next card and displays it if it needs to
-        /// </summary>
-        /// <param name="displayCards"></param>
-        public void PlayNextCard(bool displayCards)
-        {
-            var nextCard = RemainingCards.FirstOrDefault();
-            RemainingCards.Remove(nextCard);
-            PlayedCards.Add(nextCard);
-
-            if (displayCards)
-            {
-                nextCard.DisplayCard();
-            }
-        }
-
-        /// <summary>
         /// Deals the next card and returns it.
         /// </summary>
         /// <returns></returns>
@@ -150,7 +60,9 @@ namespace BlackJack
 
             return nextCard;
         }
+        #endregion
 
+        #region Probability Methods
         /// <summary>
         /// Returns the probability of being dealt an A, K, Q, J, or 10
         /// </summary>
@@ -257,6 +169,98 @@ namespace BlackJack
                 return 1;
             }
             return num * Factorial(num - 1);
+        }
+        #endregion
+
+        #region Depricated/Non-game Methods
+        /// <summary>
+        /// Plays the next card and displays it if it needs to
+        /// </summary>
+        /// <param name="displayCards"></param>
+        public void PlayNextCard(bool displayCards)
+        {
+            var nextCard = RemainingCards.FirstOrDefault();
+            RemainingCards.Remove(nextCard);
+            PlayedCards.Add(nextCard);
+
+            if (displayCards)
+            {
+                nextCard.DisplayCard();
+            }
+        }
+
+        /// <summary>
+        /// Display function to show which cards are left in the deck
+        /// </summary>
+        public void ShowCardsRemaining()
+        {
+            foreach (Card card in RemainingCards)
+            {
+                card.DisplayCard();
+            }
+            DisplayNumberOfCardsRemaining();
+        }
+
+        /// <summary>
+        /// Removes the top x cards in the deck and displays their values
+        /// </summary>
+        /// <param name="cardsToDeal"></param>
+        public void DealCards(int cardsToDeal, bool showCards)
+        {
+            for (int i = 0; i < cardsToDeal; i++)
+            {
+                PlayNextCard(showCards);
+            }
+        }
+
+        /// <summary>
+        /// "Plays" a card. Removes the "card" from the RemainingCards and Adds to the PlayedCards prop. Expects "card" in string[2] like 2H for 2 of hearts and XC for 10 of clubs.
+        /// </summary>
+        /// <param name="card"></param>
+        public void PlayCard(string card)
+        {
+            // DAL: TODO: Add some error checking here
+            string name = card[0].ToString();
+            char suiteInitial = card[1];
+
+            Suit suite;
+
+            switch (suiteInitial)
+            {
+                case 'H':
+                    suite = Suit.Hearts;
+                    break;
+                case 'D':
+                    suite = Suit.Diamonds;
+                    break;
+                case 'C':
+                    suite = Suit.Clubs;
+                    break;
+                case 'S':
+                    suite = Suit.Spades;
+                    break;
+                default:
+                    suite = Suit.Hearts; // ?
+                    break;
+            }
+            var removeMe = RemainingCards.Where(c => c.Name == name && c.Suit == suite);
+            if (removeMe.FirstOrDefault() != null)
+            {
+                RemainingCards.Remove(removeMe.FirstOrDefault());
+                PlayedCards.Add(new Card(name, suite));
+            }
+            else
+            {
+                Console.WriteLine("This card is not in the deck");
+            }
+        }
+
+        /// <summary>
+        /// Function for displaying the number of cards remaining in the deck.
+        /// </summary>
+        private void DisplayNumberOfCardsRemaining()
+        {
+            show.CardsRemaining(RemainingCards.Count);
         }
         #endregion
     }

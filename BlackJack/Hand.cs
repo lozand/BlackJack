@@ -10,11 +10,14 @@ namespace BlackJack
         public Hand()
         {
             AcesReduced = false;
+            Status = HandStatus.InPlay;
+            Cards = new List<Card>();
         }
 
         bool AcesReduced = false;
 
         public List<Card> Cards { get; set; }
+        public HandStatus Status { get; set; }
 
         public void ResetAces()
         {
