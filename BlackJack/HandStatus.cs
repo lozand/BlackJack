@@ -12,6 +12,8 @@ namespace BlackJack
         BlackJack = 2,
         Won = 3,
         Lost = 4,
-        Bust = 5        
+        Bust = 5,
+        Waiting = 6,
+        Played = 7
     }
 }

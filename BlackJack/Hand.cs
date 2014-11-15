@@ -10,7 +10,7 @@ namespace BlackJack
         public Hand()
         {
             AcesReduced = false;
-            Status = HandStatus.InPlay;
+            Status = HandStatus.Waiting;
             Cards = new List<Card>();
         }
 

@@ -82,7 +82,7 @@ namespace BlackJack
             {
                 if (player.Status != PlayerStatus.Done && player.Status != PlayerStatus.NotPlaying)
                 {
-                    PlayerPlay(player);
+                    PlayerPlay(player, player.Hands.First());
                 }
                 player.Status = PlayerStatus.Done;
             }
@@ -124,7 +124,7 @@ namespace BlackJack
                 {
                     foreach (Hand hand in player.Hands)
                     {
-                        if (hand.Status == HandStatus.InPlay)
+                        if (hand.Status == HandStatus.Played)
                         {
                             int dealerTotal = Dealer.Hands.First().Total();
                             int playerTotal = hand.Total();
@@ -161,11 +161,7 @@ namespace BlackJack
         {
             foreach (Player player in Players)
             {
-                foreach (Hand hand in player.Hands)
-                {
-                    hand.Cards = new List<Card>();
-                    hand.Status = HandStatus.InPlay;
-                }
+                player.ClearHand();
             }
         }
         #endregion
@@ -255,15 +251,15 @@ namespace BlackJack
         /// This function should run through the motions of the actual game of blackjack
         /// </summary>
         /// <param name="player"></param>
-        private void PlayerPlay(Player player)
+        private void PlayerPlay(Player player, Hand thisHand)
         {
-            Hand firstHand = player.Hands.First();
-            int total = firstHand.Total();
-
+            
+            int total = thisHand.Total();
+            thisHand.Status = HandStatus.InPlay;
             string option = "Begin";
             string prob = "";
             string probOption = "";
-            while (total < 21 && option != "Stand" && option != "Double" && firstHand.Status == HandStatus.InPlay)
+            while (total < 21 && option != "Stand" && option != "Double" && option != "split" && thisHand.Status != HandStatus.Bust)
             {
                 UpdateTable(true, true);
                 if (prob != "") { show.ProbabilityOfCards(Deck.ProbabilityOfCard(prob)); prob = ""; }
@@ -274,16 +270,19 @@ namespace BlackJack
                 switch (option.ToLower())
                 {
                     case "hit":
-                        Hit(firstHand);
+                        Hit(thisHand);
                         break;
                     case "double":
                         // If the double was not successful, then you should go through the loop again
                         // DAL: TODO: Should find a way to relay a "fail" to the user since UpdateTable() 
                         // clears all messages. 
-                        if (!Double(player,firstHand)) { option = "Failed"; } 
+                        if (!Double(player, thisHand)) { option = "Failed"; }
+                        thisHand.Status = HandStatus.Played;
                         break;
                     case "split":
-                        Split(player);
+                        Split(ref player);
+                        option = "Stand";
+                        thisHand.Status = HandStatus.Played;
                         break;
                     case "prob":
                         prob = CheckProbability(probOption);
@@ -291,9 +290,11 @@ namespace BlackJack
                     case "stand":
                     default:
                         option = "Stand";
+                        thisHand.Status = HandStatus.Played;
                         break;
                 }
             }
+            
         }
 
         //private void PlayerPlay(Player player)
@@ -348,8 +349,19 @@ namespace BlackJack
             }
         }
 
-        private void Split(Player player)
+        private void Split(ref Player player)
         {
+            Hand firstHand = player.Hands[0];
+            player.Hands.Add(new Hand());
+            Hand secondHand = player.Hands[player.NumberOfHands];
+            secondHand.Cards.Add(firstHand.Cards[1]);
+            firstHand.Cards.Remove(firstHand.Cards[1]);
+
+            firstHand.Cards.Add(NextCard());
+            PlayerPlay(player, firstHand);
+
+            secondHand.Cards.Add(NextCard());
+            PlayerPlay(player, secondHand);
         }
 
         private bool Double(Player player, Hand hand)

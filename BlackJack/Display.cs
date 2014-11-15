@@ -117,6 +117,13 @@ namespace BlackJack
             Reset();
         }
 
+        public void PlayerCardsInPlay(string name)
+        {
+            Set("info");
+            Console.WriteLine("Player {0} has these cards     <-------", name);
+            Reset();
+        }
+
         public void DealerCard(string name)
         {
             Set("info");

@@ -19,6 +19,13 @@ namespace BlackJack
         public PlayerStatus Status { get; set; }
         public double Bet { get; set; }
         public double Cash { get; set; }
+        public int NumberOfHands
+        {
+            get
+            {
+                return Hands.Count - 1;
+            }
+        }
 
         
         private Display log = new Display();
@@ -38,6 +45,13 @@ namespace BlackJack
             {
                 hand.ResetAces();
             }
+        }
+
+        public void ClearHand()
+        {
+            Hands = new List<Hand>();
+            Hands.Add(new Hand());
+            Status = PlayerStatus.InPlay;
         }
 
         public void PushBet()
@@ -96,6 +110,10 @@ namespace BlackJack
                         else if (hand.Status == HandStatus.Push && Name != "Dealer")
                         {
                             log.PlayerHasTied(Name);
+                        }
+                        else if (hand.Status == HandStatus.InPlay)
+                        {
+                            log.PlayerCardsInPlay(Name);
                         }
                         else
                         {
