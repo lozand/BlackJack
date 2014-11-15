@@ -13,7 +13,7 @@ namespace BlackJack
             Deck = deck;
             Players = players;
             TableStatus = TableStatus.Open;
-            ShuffleIfNecessary();
+            ReshuffleIfNecessary();
             SetInitialBets();
             DealInitialHand();
             Play();
@@ -37,22 +37,39 @@ namespace BlackJack
             show.SkipLine();
             foreach (Player player in Players)
             {
-                double oldBet = player.Bet;
-                player.ClearBet();
-                show.PlayerBet(player.Name);
-                string input = show.Read();
-                if (input == "0")
+                bool betOk = false;
+                while (!betOk)
                 {
-                    player.Status = PlayerStatus.NotPlaying;
-                }
-                else if (input != "rebet")
-                {
-                    player.BetCash(Int32.Parse(input));
-                    player.Status = PlayerStatus.InPlay;
-                }
-                else
-                {
-                    player.BetCash(oldBet);
+                    betOk = false;
+                    double oldBet = player.Bet;
+                    player.ClearBet();
+                    show.PlayerBet(player.Name);
+                    string input = show.Read();
+                    if (input == "0")
+                    {
+                        player.Status = PlayerStatus.NotPlaying;
+                        betOk = true;
+                    }
+                    else if (input != "rebet")
+                    {
+                        int bet = Int32.Parse(input);
+                        if (bet <= player.Cash)
+                        {
+                            player.BetCash(bet);
+                            player.Status = PlayerStatus.InPlay;
+                            betOk = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("You tried to bet ${0}, but you only have ${1}", bet, player.Cash);
+                            betOk = false;
+                        }
+                    }
+                    else
+                    {
+                        player.BetCash(oldBet);
+                        betOk = true;
+                    }
                 }
             }
         }
@@ -151,10 +168,6 @@ namespace BlackJack
         public void Results()
         {
             UpdateTable(false);
-            if (Dealer.Hands.First().Status == HandStatus.Lost)
-            {
-                //show.PlayerResult(Dealer.Name, "Lost");
-            }
         }
 
         public void ClearHand()
@@ -259,11 +272,12 @@ namespace BlackJack
             string option = "Begin";
             string prob = "";
             string probOption = "";
+            bool cannotDouble = false;
             while (total < 21 && option != "Stand" && option != "Double" && option != "split" && thisHand.Status != HandStatus.Bust)
             {
                 UpdateTable(true, true);
                 if (prob != "") { show.ProbabilityOfCards(Deck.ProbabilityOfCard(prob)); prob = ""; }
-                show.PlayerOptions(player.Name);
+                show.PlayerOptions(player.Name,cannotDouble);
                 option = show.Read();
                 if (option.IndexOf(' ') != -1) { probOption = option; option = option.Substring(0, option.IndexOf(' ')); }
                 show.Clear();
@@ -276,8 +290,15 @@ namespace BlackJack
                         // If the double was not successful, then you should go through the loop again
                         // DAL: TODO: Should find a way to relay a "fail" to the user since UpdateTable() 
                         // clears all messages. 
-                        if (!Double(player, thisHand)) { option = "Failed"; }
-                        thisHand.Status = HandStatus.Played;
+                        if (!Double(player, thisHand))
+                        {
+                            cannotDouble = true;
+                            option = "begin";
+                        }
+                        else if (thisHand.Status != HandStatus.Bust)
+                        {
+                            thisHand.Status = HandStatus.Played;
+                        }
                         break;
                     case "split":
                         Split(ref player);
@@ -320,7 +341,7 @@ namespace BlackJack
             Dealer.ShowPlayerCards(hideOneCard);
         }
 
-        private void ShuffleIfNecessary()
+        private void ReshuffleIfNecessary()
         {
             if (Deck.GetCardsRemaining() < CardsNecessaryToPlay)
             {
@@ -351,7 +372,7 @@ namespace BlackJack
 
         private void Split(ref Player player)
         {
-            Hand firstHand = player.Hands[0];
+            Hand firstHand = player.Hands[player.NumberOfHands];
             player.Hands.Add(new Hand());
             Hand secondHand = player.Hands[player.NumberOfHands];
             secondHand.Cards.Add(firstHand.Cards[1]);
@@ -366,11 +387,17 @@ namespace BlackJack
 
         private bool Double(Player player, Hand hand)
         {
-            player.Bet *= 2;
             bool doubleSuccess = false;
-            Hit(hand);
-            doubleSuccess = true;
-
+            if (player.Bet > player.Cash)
+            {
+                doubleSuccess = false;
+            }
+            else
+            {
+                player.Bet *= 2;
+                Hit(hand);
+                doubleSuccess = true;
+            }
             return doubleSuccess;
         }
 
@@ -387,7 +414,9 @@ namespace BlackJack
             {
                 player.ShowPlayerCards();
             }
+
             Dealer.ShowPlayerCards(hideDealerCards);
+
             if (showProbability)
             {
                 show.SkipLine();

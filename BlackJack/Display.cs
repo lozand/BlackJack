@@ -131,9 +131,13 @@ namespace BlackJack
             Reset();
         }
 
-        public void PlayerOptions(string name)
+        public void PlayerOptions(string name, bool cannotDouble)
         {
             Set("info");
+            if (cannotDouble)
+            {
+                Console.WriteLine("You do not have enough money to double");
+            }
             Console.WriteLine("Player {0} to move. You may Hit, Stand or Double", name);
             Reset();
         }
