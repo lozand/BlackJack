@@ -10,6 +10,7 @@ namespace BlackJack
     {
         public Display()
         {
+            Message = "";
         }
 
         // DAL: TODO: This class should be interface'd.
@@ -20,6 +21,29 @@ namespace BlackJack
             blackCard = "blackcard",
             redCard = "redcard",
             question = "question";
+
+        private string Message { get; set; }
+
+        public void DisplayMessage()
+        {
+            Console.WriteLine(Message);
+        }
+
+        public void AddToMessage(string content)
+        {
+            Message += "\r\n";
+            Message += content;
+        }
+
+        public void NewMessage(string content)
+        {
+            Message = content;
+        }
+
+        public void ClearMessage()
+        {
+            Message = "";
+        }
 
         public void PlayerResult(string name, string result)
         {
@@ -96,6 +120,13 @@ namespace BlackJack
             Reset();
         }
 
+        public void PlayerNotEnoughCash(string name, double bet, double cash)
+        {
+            Set(info);
+            Console.WriteLine("You tried to bet ${0}, but you only have ${1}", bet, cash);
+            Reset();
+        }
+
         public void DealerWins()
         {
             Set(bad);
@@ -131,13 +162,9 @@ namespace BlackJack
             Reset();
         }
 
-        public void PlayerOptions(string name, bool cannotDouble)
+        public void PlayerOptions(string name)
         {
             Set("info");
-            if (cannotDouble)
-            {
-                Console.WriteLine("You do not have enough money to double");
-            }
             Console.WriteLine("Player {0} to move. You may Hit, Stand or Double", name);
             Reset();
         }
@@ -187,7 +214,9 @@ namespace BlackJack
         public void ProbabilityOfCards(double probability)
         {
             Set(info);
-            Console.WriteLine("Probability of getting these cards is {0}%.", probability);
+            //Console.WriteLine("Probability of getting these cards is {0}%.", probability);
+            string message = String.Format("Probability of getting these cards is {0}%.", probability);
+            AddToMessage(message);
             Reset();
         }
 

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BlackJack
 {
-    public enum Play
+    public enum PlayHand
     {
         Stay = 0,
         Hit = 1,

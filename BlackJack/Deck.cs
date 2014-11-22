@@ -172,6 +172,7 @@ namespace BlackJack
         }
         #endregion
 
+        // Let's not delete these for now, since they can still be used outside of the game. 
         #region Depricated/Non-game Methods
         /// <summary>
         /// Plays the next card and displays it if it needs to

@@ -93,7 +93,7 @@ namespace BlackJack
                         }
                         else if (hand.Status == HandStatus.BlackJack)
                         {
-                            log.PlayerGotBlackJack(Name, Bet);
+                            log.PlayerGotBlackJack(Name, Bet * blackJackPayout);
                         }
                         else if (hand.Status == HandStatus.Won)
                         {

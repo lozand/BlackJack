@@ -61,7 +61,7 @@ namespace BlackJack
                         }
                         else
                         {
-                            Console.WriteLine("You tried to bet ${0}, but you only have ${1}", bet, player.Cash);
+                            show.PlayerNotEnoughCash(player.Name, bet, player.Cash);
                             betOk = false;
                         }
                     }
@@ -82,8 +82,8 @@ namespace BlackJack
         public void DealInitialHand()
         {
             TableStatus = TableStatus.Dealing;
-            DealCard(false);
-            DealCard(false);
+            DealCard();
+            DealCard();
             CheckForBlackJack();
             if (TableStatus != TableStatus.Finished)
             {
@@ -184,7 +184,7 @@ namespace BlackJack
         /// Deals one card to each player and then one to the dealer.
         /// This should only be called in the initial card deal.
         /// </summary>
-        private void DealCard(bool ShowDealerCard)
+        private void DealCard()
         {
             foreach (Player player in Players)
             {
@@ -198,6 +198,8 @@ namespace BlackJack
             }
             Card dealerCard = Deck.DealNextCard();
             Dealer.Hands.First().Cards.Add(dealerCard);
+            UpdateTable(true, true);
+            show.Wait();
         }
 
         /// <summary>
@@ -272,60 +274,63 @@ namespace BlackJack
             string option = "Begin";
             string prob = "";
             string probOption = "";
-            bool cannotDouble = false;
             while (total < 21 && option != "Stand" && option != "Double" && option != "split" && thisHand.Status != HandStatus.Bust)
             {
                 UpdateTable(true, true);
                 if (prob != "") { show.ProbabilityOfCards(Deck.ProbabilityOfCard(prob)); prob = ""; }
-                show.PlayerOptions(player.Name,cannotDouble);
+                show.PlayerOptions(player.Name);
                 option = show.Read();
                 if (option.IndexOf(' ') != -1) { probOption = option; option = option.Substring(0, option.IndexOf(' ')); }
                 show.Clear();
-                switch (option.ToLower())
+
+                string lowerOption = option.ToLower();
+
+                if(lowerOption == "hit")
                 {
-                    case "hit":
-                        Hit(thisHand);
-                        break;
-                    case "double":
-                        // If the double was not successful, then you should go through the loop again
-                        // DAL: TODO: Should find a way to relay a "fail" to the user since UpdateTable() 
-                        // clears all messages. 
-                        if (!Double(player, thisHand))
-                        {
-                            cannotDouble = true;
-                            option = "begin";
-                        }
-                        else if (thisHand.Status != HandStatus.Bust)
-                        {
-                            thisHand.Status = HandStatus.Played;
-                        }
-                        break;
-                    case "split":
+                    Hit(thisHand);
+                }
+                else if(lowerOption == "double")
+                {
+                    if (!Double(player, thisHand))
+                    {
+                        var message = "You do not have enough money to double";
+                        show.AddToMessage(message);
+                        option = "begin";
+                    }
+                    else if (thisHand.Status != HandStatus.Bust)
+                    {
+                        thisHand.Status = HandStatus.Played;
+                    }
+                }
+                else if(lowerOption == "split")
+                {
+                    if (thisHand.Cards[0].Name == thisHand.Cards[1].Name)
+                    {
+                        // We also need to verify that the player has enough money to split.
                         Split(ref player);
                         option = "Stand";
                         thisHand.Status = HandStatus.Played;
-                        break;
-                    case "prob":
-                        prob = CheckProbability(probOption);
-                        break;
-                    case "stand":
-                    default:
-                        option = "Stand";
-                        thisHand.Status = HandStatus.Played;
-                        break;
+                    }
+                    else
+                    {
+                        var message = "Split is not valid in this situation.";
+                        show.AddToMessage(message);
+                        option = "Begin";
+                    }
                 }
+                else if(lowerOption == "stay")
+                {
+                    prob = CheckProbability(probOption);
+                }
+                else
+                {
+                    option = "Stand";
+                    thisHand.Status = HandStatus.Played;
+                }
+
             }
             
         }
-
-        //private void PlayerPlay(Player player)
-        //{
-        //    int total = player.Hands.First().Total();
-        //    string option = "Begin";
-
-        //    UpdateTable(true, true);
-        //    option = show.Read();
-        //}
 
         private void ShowPlayerCards()
         {
@@ -337,7 +342,7 @@ namespace BlackJack
 
         private void ShowDealerCard(bool hideOneCard = true)
         {
-            Console.WriteLine("Dealer has:");
+            //Console.WriteLine("Dealer has:");
             Dealer.ShowPlayerCards(hideOneCard);
         }
 
@@ -422,6 +427,10 @@ namespace BlackJack
                 show.SkipLine();
                 Deck.ProbabilityOfHighCard();
             }
+
+            show.DisplayMessage();
+            show.ClearMessage();
+
         }
         #endregion
     }
