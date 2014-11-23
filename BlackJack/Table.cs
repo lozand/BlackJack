@@ -28,6 +28,9 @@ namespace BlackJack
 
         private const int DealerStand = 17;
         private const int CardsNecessaryToPlay = 20;
+
+        private const string hit = "hit", stand = "stand", dbl = "double", split = "split";
+
         private Display show = new Display();
 
         #region Public Methods
@@ -274,7 +277,7 @@ namespace BlackJack
             string option = "Begin";
             string prob = "";
             string probOption = "";
-            while (total < 21 && option != "Stand" && option != "Double" && option != "split" && thisHand.Status != HandStatus.Bust)
+            while (total < 21 && (option.ToLower() == hit || option.ToLower() == "begin") && thisHand.Status != HandStatus.Bust)
             {
                 UpdateTable(true, true);
                 if (prob != "") { show.ProbabilityOfCards(Deck.ProbabilityOfCard(prob)); prob = ""; }
@@ -285,11 +288,11 @@ namespace BlackJack
 
                 string lowerOption = option.ToLower();
 
-                if(lowerOption == "hit")
+                if(lowerOption == hit)
                 {
                     Hit(thisHand);
                 }
-                else if(lowerOption == "double")
+                else if(lowerOption == dbl)
                 {
                     if (!Double(player, thisHand))
                     {
@@ -302,13 +305,13 @@ namespace BlackJack
                         thisHand.Status = HandStatus.Played;
                     }
                 }
-                else if(lowerOption == "split")
+                else if(lowerOption == split)
                 {
                     if (thisHand.Cards[0].Name == thisHand.Cards[1].Name)
                     {
                         // We also need to verify that the player has enough money to split.
                         Split(ref player);
-                        option = "Stand";
+                        option = stand;
                         thisHand.Status = HandStatus.Played;
                     }
                     else
@@ -318,13 +321,13 @@ namespace BlackJack
                         option = "Begin";
                     }
                 }
-                else if(lowerOption == "stay")
+                else if(lowerOption == stand)
                 {
                     prob = CheckProbability(probOption);
                 }
                 else
                 {
-                    option = "Stand";
+                    option = stand;
                     thisHand.Status = HandStatus.Played;
                 }
 
