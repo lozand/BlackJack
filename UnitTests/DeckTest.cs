@@ -10,8 +10,31 @@ namespace UnitTests
         private int cardsInADeck = 52;
 
 
-        // Use this to get access to private objects. 
-        
+        [TestMethod]
+        public void Constructor_SingleDeck_FourOfEachCardExists()
+        {
+            Deck deck = new Deck();
+
+            var numberOfAces = deck.RemainingCards.FindAll(c => c.Name == "A").Count;
+
+            int expectedNumberOfAces = 4;
+            int actualNumberOfAces = numberOfAces;
+
+            Assert.AreEqual(expectedNumberOfAces, actualNumberOfAces);
+        }
+
+        [TestMethod]
+        public void Constructor_DoubleDeck_EightOfEachCardExists()
+        {
+            Deck deck = new Deck(2);
+
+            var numberOfAces = deck.RemainingCards.FindAll(c => c.Name == "A").Count;
+
+            int expectedNumberOfAces = 8;
+            int actualNumberOfAces = numberOfAces;
+
+            Assert.AreEqual(expectedNumberOfAces, actualNumberOfAces);
+        }
 
         [TestMethod]
         public void GetCardsRemaining_SingleDeck_AllCardsRemaining()
@@ -93,13 +116,15 @@ namespace UnitTests
         [TestMethod]
         public void PropTotalCards_SixDecks_AllCardsRemain()
         {
-            Deck deck = new Deck(6);
+            int decks = 6;
 
-            PrivateObject obj = new PrivateObject(new Deck(6));
+            Deck deck = new Deck(decks);
+
+            PrivateObject obj = new PrivateObject(new Deck(decks));
 
             int actual = (int)obj.GetFieldOrProperty("TOTAL_CARDS");
 
-            int expected = cardsInADeck * 6;
+            int expected = cardsInADeck * decks;
 
             Assert.AreEqual(actual, expected);
         }
@@ -107,11 +132,12 @@ namespace UnitTests
         [TestMethod]
         public void Reset_DeckResetsToFullDeck_CardsReset()
         {
+            int cardsToDeal = 15;
             Deck deck = new Deck();
-            deck.DealCards(15, false);
+            deck.DealCards(cardsToDeal, false);
             PrivateObject obj = new PrivateObject(deck);
 
-            int expectedCards = (deck.TOTAL_CARDS * deck.NumberOfDecks) - 15;
+            int expectedCards = (deck.TOTAL_CARDS * deck.NumberOfDecks) - cardsToDeal;
             int actualCards = deck.GetCardsRemaining();
 
             Assert.AreEqual(expectedCards, actualCards);

@@ -41,10 +41,10 @@ namespace BlackJack
         public void ClearBet()
         {
             Bet = 0;
-            foreach (Hand hand in Hands)
-            {
-                hand.ResetAces();
-            }
+            //foreach (Hand hand in Hands)
+            //{
+            //    hand.ResetAces();
+            //}
         }
 
         public void ClearHand()

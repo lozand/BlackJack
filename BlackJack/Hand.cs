@@ -19,11 +19,12 @@ namespace BlackJack
         public List<Card> Cards { get; set; }
         public HandStatus Status { get; set; }
 
-        public void ResetAces()
-        {
-            AcesReduced = false;
-        }
+        //public void ResetAces()
+        //{
+        //    AcesReduced = false;
+        //}
 
+        // TODO: This "method" should really be a property.
         public int Total()
         {
             int total = 0;

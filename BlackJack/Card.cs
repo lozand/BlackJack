@@ -45,7 +45,7 @@ namespace BlackJack
         /// <returns></returns>
         public bool IsTenCard()
         {
-            return Name == "X" || Name == "J" || Name == "Q" || Name == "K";
+            return NumberValue == 10;
         }
 
 
