@@ -29,7 +29,7 @@ namespace BlackJack
         private const int DealerStand = 17;
         private const int CardsNecessaryToPlay = 20;
 
-        private const string hit = "hit", stand = "stand", dbl = "double", split = "split";
+        private const string hit = "hit", stand = "stand", dbl = "double", split = "split", prob = "prob";
 
         private Display show = new Display();
 
@@ -275,12 +275,12 @@ namespace BlackJack
             int total = thisHand.Total();
             thisHand.Status = HandStatus.InPlay;
             string option = "Begin";
-            string prob = "";
+            string probabilityOptions = "";
             string probOption = "";
             while (total < 21 && (option.ToLower() == hit || option.ToLower() == "begin") && thisHand.Status != HandStatus.Bust)
             {
                 UpdateTable(true, true);
-                if (prob != "") { show.ProbabilityOfCards(Deck.ProbabilityOfCard(prob)); prob = ""; }
+                if (probabilityOptions != "") { show.ProbabilityOfCards(Deck.ProbabilityOfCard(probabilityOptions)); probabilityOptions = ""; }
                 show.PlayerOptions(player.Name);
                 option = show.Read();
                 if (option.IndexOf(' ') != -1) { probOption = option; option = option.Substring(0, option.IndexOf(' ')); }
@@ -321,9 +321,9 @@ namespace BlackJack
                         option = "Begin";
                     }
                 }
-                else if(lowerOption == stand)
+                else if(lowerOption == prob)
                 {
-                    prob = CheckProbability(probOption);
+                    probabilityOptions = CheckProbability(probOption);
                 }
                 else
                 {

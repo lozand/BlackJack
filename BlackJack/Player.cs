@@ -139,17 +139,6 @@ namespace BlackJack
 
                     log.Total(hand.Total());
                 }
-
-                // Put a better card display here.
-                //for (int i = 0; i < Hands.Count; i++)
-                //{
-                //    for (int j = 0; j < Hands[i].Cards.Count; j++)
-                //    {
-                //        Hands[i].Cards[j].DisplayCard();
-                //        Console.Write("\t");
-                //    }
-                //    Console.WriteLine("");
-                //}
             }
             log.SkipLine();
         }
