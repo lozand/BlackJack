@@ -36,15 +36,12 @@ namespace BlackJack
         {
             Bet += money;
             Cash -= money;
+            // Is throwing an exception here the best way to do this?
         }
 
         public void ClearBet()
         {
             Bet = 0;
-            //foreach (Hand hand in Hands)
-            //{
-            //    hand.ResetAces();
-            //}
         }
 
         public void ClearHand()

@@ -277,7 +277,7 @@ namespace BlackJack
             string option = "Begin";
             string probabilityOptions = "";
             string probOption = "";
-            while (total < 21 && (option.ToLower() == hit || option.ToLower() == "begin") && thisHand.Status != HandStatus.Bust)
+            while (total < 21 && (option.ToLower() == hit || option.ToLower() == "begin" || option.ToLower() == prob) && thisHand.Status != HandStatus.Bust)
             {
                 UpdateTable(true, true);
                 if (probabilityOptions != "") { show.ProbabilityOfCards(Deck.ProbabilityOfCard(probabilityOptions)); probabilityOptions = ""; }
