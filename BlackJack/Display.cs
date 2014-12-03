@@ -10,7 +10,7 @@ namespace BlackJack
     {
         public Display()
         {
-            Message = "";
+            //Message = "";
         }
 
         // DAL: TODO: This class should be interface'd.
@@ -22,7 +22,7 @@ namespace BlackJack
             redCard = "redcard",
             question = "question";
 
-        private string Message { get; set; }
+        private static string Message { get; set; }
 
         public void DisplayMessage()
         {
@@ -43,6 +43,13 @@ namespace BlackJack
         public void ClearMessage()
         {
             Message = "";
+        }
+
+        public void Error(string message)
+        {
+            Set(bad);
+            AddToMessage(message);
+            Reset();
         }
 
         public void PlayerResult(string name, string result)

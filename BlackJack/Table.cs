@@ -40,39 +40,46 @@ namespace BlackJack
             show.SkipLine();
             foreach (Player player in Players)
             {
-                bool betOk = false;
-                while (!betOk)
+                try
                 {
-                    betOk = false;
-                    double oldBet = player.Bet;
-                    player.ClearBet();
-                    show.PlayerBet(player.Name);
-                    string input = show.Read();
-                    if (input == "0")
+                    bool betOk = false;
+                    while (!betOk)
                     {
-                        player.Status = PlayerStatus.NotPlaying;
-                        betOk = true;
-                    }
-                    else if (input != "rebet")
-                    {
-                        int bet = Int32.Parse(input);
-                        if (bet <= player.Cash)
+                        betOk = false;
+                        double oldBet = player.Bet;
+                        player.ClearBet();
+                        show.PlayerBet(player.Name);
+                        string input = show.Read();
+                        if (input == "0")
                         {
-                            player.BetCash(bet);
-                            player.Status = PlayerStatus.InPlay;
+                            player.Status = PlayerStatus.NotPlaying;
                             betOk = true;
+                        }
+                        else if (input != "rebet")
+                        {
+                            int bet = Int32.Parse(input);
+                            if (bet <= player.Cash)
+                            {
+                                player.BetCash(bet);
+                                player.Status = PlayerStatus.InPlay;
+                                betOk = true;
+                            }
+                            else
+                            {
+                                show.PlayerNotEnoughCash(player.Name, bet, player.Cash);
+                                betOk = false;
+                            }
                         }
                         else
                         {
-                            show.PlayerNotEnoughCash(player.Name, bet, player.Cash);
-                            betOk = false;
+                            player.BetCash(oldBet);
+                            betOk = true;
                         }
                     }
-                    else
-                    {
-                        player.BetCash(oldBet);
-                        betOk = true;
-                    }
+                }
+                catch (Exception ex)
+                {
+                    show.Error(ex.Message);
                 }
             }
         }
