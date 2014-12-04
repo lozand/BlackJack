@@ -14,15 +14,20 @@ namespace BlackJack
             Cards = new List<Card>();
         }
 
+        /// <summary>
+        /// This property determines whether or not a hand needs to count an Ace as a one or eleven.
+        /// </summary>
         bool AcesReduced = false;
 
+        /// <summary>
+        /// Represents the cards in the hand. Duh.
+        /// </summary>
         public List<Card> Cards { get; set; }
-        public HandStatus Status { get; set; }
 
-        //public void ResetAces()
-        //{
-        //    AcesReduced = false;
-        //}
+        /// <summary>
+        /// Each hand has a status, this takes care of that.
+        /// </summary>
+        public HandStatus Status { get; set; }
 
         // TODO: This "method" should really be a property.
         public int Total()

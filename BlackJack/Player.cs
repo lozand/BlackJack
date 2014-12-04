@@ -23,7 +23,7 @@ namespace BlackJack
         {
             get
             {
-                return Hands.Count - 1;
+                return Hands.Count;
             }
         }
 

@@ -26,6 +26,7 @@ namespace BlackJack
         public Deck Deck { get; set; }
         public TableStatus TableStatus { get; set; }
 
+        // Eventually, I would like to move properties like this into a settings.xml file. Different casinos have different rules
         private const int DealerStand = 17;
         private const int CardsNecessaryToPlay = 20;
 
@@ -116,7 +117,6 @@ namespace BlackJack
 
             ShowDealerCard(false);
 
-            //if (!Players.All(p => p.Status == PlayerStatus.Lost || p.Status == PlayerStatus.Bust || p.Status == PlayerStatus.NotPlaying))
             if(!Players.All(p => p.Hands.All(h => h.Status == HandStatus.Bust) || p.Status == PlayerStatus.NotPlaying))
             {
                 while (Dealer.Hands.First().Total() < DealerStand)
@@ -281,7 +281,7 @@ namespace BlackJack
             
             int total = thisHand.Total();
             thisHand.Status = HandStatus.InPlay;
-            string option = "Begin";
+            string option = "begin";
             string probabilityOptions = "";
             string probOption = "";
             while (total < 21 && (option.ToLower() == hit || option.ToLower() == "begin" || option.ToLower() == prob) && thisHand.Status != HandStatus.Bust)
@@ -352,7 +352,6 @@ namespace BlackJack
 
         private void ShowDealerCard(bool hideOneCard = true)
         {
-            //Console.WriteLine("Dealer has:");
             Dealer.ShowPlayerCards(hideOneCard);
         }
 
@@ -387,9 +386,9 @@ namespace BlackJack
 
         private void Split(ref Player player)
         {
-            Hand firstHand = player.Hands[player.NumberOfHands];
+            Hand firstHand = player.Hands[player.NumberOfHands - 1];
             player.Hands.Add(new Hand());
-            Hand secondHand = player.Hands[player.NumberOfHands];
+            Hand secondHand = player.Hands[player.NumberOfHands - 1];
             secondHand.Cards.Add(firstHand.Cards[1]);
             firstHand.Cards.Remove(firstHand.Cards[1]);
 
