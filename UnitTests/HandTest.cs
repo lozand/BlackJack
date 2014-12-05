@@ -15,7 +15,7 @@ namespace UnitTests
             hand.Cards.Add(new Card("J", Suit.Hearts));
 
             int expectedTotal = 21;
-            int actualTotal = hand.Total();
+            int actualTotal = hand.Total;
 
             Assert.AreEqual(expectedTotal, actualTotal);
         }
@@ -28,7 +28,7 @@ namespace UnitTests
             hand.Cards.Add(new Card("10", Suit.Hearts));
 
             int expectedTotal = 20;
-            int actualTotal = hand.Total();
+            int actualTotal = hand.Total;
 
             Assert.AreEqual(expectedTotal, actualTotal);            
         }
@@ -41,7 +41,7 @@ namespace UnitTests
             hand.Cards.Add(new Card("J", Suit.Hearts));
 
             int expectedTotal = 20;
-            int actualTotal = hand.Total();
+            int actualTotal = hand.Total;
 
             Assert.AreEqual(expectedTotal, actualTotal);
         }
@@ -54,7 +54,7 @@ namespace UnitTests
             hand.Cards.Add(new Card("3", Suit.Hearts));
 
             int expectedTotal = 5;
-            int actualTotal = hand.Total();
+            int actualTotal = hand.Total;
 
             Assert.AreEqual(expectedTotal, actualTotal);
         }
@@ -67,7 +67,7 @@ namespace UnitTests
             hand.Cards.Add(new Card("8", Suit.Hearts));
 
             int expectedTotal = 15;
-            int actualTotal = hand.Total();
+            int actualTotal = hand.Total;
 
             Assert.AreEqual(expectedTotal, actualTotal);
         }
@@ -82,7 +82,7 @@ namespace UnitTests
             hand.Cards.Add(new Card("5", Suit.Diamonds));
 
             int expectedTotal = 20;
-            int actualTotal = hand.Total();
+            int actualTotal = hand.Total;
 
             Assert.AreEqual(expectedTotal, actualTotal);
         }
@@ -96,7 +96,7 @@ namespace UnitTests
             hand.Cards.Add(new Card("J", Suit.Hearts));
             
             int expectedTotal = 26;
-            int actualTotal = hand.Total();
+            int actualTotal = hand.Total;
 
             Assert.AreEqual(expectedTotal, actualTotal);
         }

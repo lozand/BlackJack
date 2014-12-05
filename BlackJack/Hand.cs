@@ -19,36 +19,45 @@ namespace BlackJack
         /// </summary>
         bool AcesReduced = false;
 
+        private List<Card> cards { get; set; }
+
         /// <summary>
         /// Represents the cards in the hand. Duh.
         /// </summary>
-        public List<Card> Cards { get; set; }
+        public List<Card> Cards
+        {
+            get
+            {
+                if (Total > 21 && !AcesReduced)
+                {
+                    foreach (Card card in cards)
+                    {
+                        if (card.Name == "A" && card.NumberValue == 11 && !AcesReduced)
+                        {
+                            card.NumberValue -= 10;
+                            AcesReduced = true;
+                        }
+                    }
+                }
+                return cards;
+            }
+            set { cards = value; }
+        }
 
         /// <summary>
         /// Each hand has a status, this takes care of that.
         /// </summary>
         public HandStatus Status { get; set; }
 
-        // TODO: This "method" should really be a property.
-        public int Total()
-        {
+        public int Total { get {
             int total = 0;
-            Cards.ForEach(c =>
+
+            cards.ForEach(c =>
             {
                 total += c.NumberValue;
             });
-            if (total > 21 && !AcesReduced)
-            {
-                foreach (Card card in Cards)
-                {
-                    if (card.Name == "A" && card.NumberValue == 11 && !AcesReduced)
-                    {
-                        card.NumberValue -= 10;
-                        AcesReduced = true;
-                    }
-                }
-            }
+
             return total;
-        }
+        } }
     }
 }

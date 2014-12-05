@@ -119,7 +119,7 @@ namespace BlackJack
 
             if(!Players.All(p => p.Hands.All(h => h.Status == HandStatus.Bust) || p.Status == PlayerStatus.NotPlaying))
             {
-                while (Dealer.Hands.First().Total() < DealerStand)
+                while (Dealer.Hands.First().Total < DealerStand)
                 {
                     Hit(Dealer.Hands.First());
                 }
@@ -153,8 +153,8 @@ namespace BlackJack
                     {
                         if (hand.Status == HandStatus.Played)
                         {
-                            int dealerTotal = Dealer.Hands.First().Total();
-                            int playerTotal = hand.Total();
+                            int dealerTotal = Dealer.Hands.First().Total;
+                            int playerTotal = hand.Total;
                             if (playerTotal > dealerTotal)
                             {
                                 hand.Status = HandStatus.Won;
@@ -279,7 +279,7 @@ namespace BlackJack
         private void PlayerPlay(Player player, Hand thisHand)
         {
             
-            int total = thisHand.Total();
+            int total = thisHand.Total;
             thisHand.Status = HandStatus.InPlay;
             string option = "begin";
             string probabilityOptions = "";
@@ -377,7 +377,7 @@ namespace BlackJack
             Card card = NextCard();
             hand.Cards.Add(card);
             UpdateTable();
-            if (hand.Total() > 21)
+            if (hand.Total > 21)
             {
                 show.PlayerBust();
                 hand.Status = HandStatus.Bust;

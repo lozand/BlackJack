@@ -134,7 +134,7 @@ namespace BlackJack
                         card.DisplayCard();
                     }
 
-                    log.Total(hand.Total());
+                    log.Total(hand.Total);
                 }
             }
             log.SkipLine();
