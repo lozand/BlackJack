@@ -49,7 +49,7 @@ namespace BlackJack
                         betOk = false;
                         double oldBet = player.Bet;
                         player.ClearBet();
-                        show.PlayerBet(player.Name);
+                        show.PlayerBet(player.Name, player.Cash.ToString());
                         string input = show.Read();
                         if (input == "0")
                         {

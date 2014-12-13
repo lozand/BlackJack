@@ -12,44 +12,46 @@ namespace BlackJack
             Deck myDeck = new Deck(3);
             Display show = new Display();
             //myDeck.ShowCardsRemaining();
-            Console.WriteLine("");
-            string whatsNext = "Go";
-            const string Exit = "exit",
+            const string Exit = "9",
                 Deal = "deal",
                 ProbabilityOfHighCard = "highcard",
                 PlayCard = "playcard",
                 Reset = "reset",
                 ShowCards = "showcards",
-                PlayGame = "play";
+                PlayGame = "1";
 
-            while (whatsNext.ToLower() != Exit.ToLower())
+            DisplayOptions();
+
+            var choice = Console.ReadLine();
+
+            while (choice.ToLower() != Exit.ToLower())
             {
-                switch (whatsNext.ToLower())
+                switch (choice.ToLower())
                 {
-                    case Deal:
-                        Program.DealCard(myDeck);
-                        break;
-                    case ProbabilityOfHighCard:
-                        Program.ProbabilityOfHighCard(myDeck);
-                        break;
-                    case PlayCard:
-                        Program.PlayCard(myDeck);
-                        break;
-                    case Reset:
-                        Program.Reset(myDeck, show);
-                        break;
-                    case ShowCards:
-                        Program.ShowCards(myDeck);
-                        break;
+                    //case Deal:
+                    //    Program.DealCard(myDeck);
+                    //    break;
+                    //case ProbabilityOfHighCard:
+                    //    Program.ProbabilityOfHighCard(myDeck);
+                    //    break;
+                    //case PlayCard:
+                    //    Program.PlayCard(myDeck);
+                    //    break;
+                    //case Reset:
+                    //    Program.Reset(myDeck, show);
+                    //    break;
+                    //case ShowCards:
+                    //    Program.ShowCards(myDeck);
+                    //    break;
                     case PlayGame:
                         Program.PlayTheGame(myDeck, show);
                         break;
                     default:
-                        Console.WriteLine("You must enter one of the following keywords: {0}, {1}, {2}, {3}, {4}, or {5}.", Deal, ProbabilityOfHighCard, PlayCard, Reset, ShowCards, Exit);
+                        //Console.WriteLine("You must enter one of the following keywords: {0}, {1}, {2}, {3}, {4}, or {5}.", Deal, ProbabilityOfHighCard, PlayCard, Reset, ShowCards, Exit);
                         break;
                 }
-
-                whatsNext = Console.ReadLine();
+                DisplayOptions();
+                choice = Console.ReadLine();
             }            
         }
 
@@ -107,8 +109,16 @@ namespace BlackJack
                 playAgain = display.Read();
                 display.Clear();
             }
+        }
 
-            Console.WriteLine("Game is done");
+        private static void DisplayOptions()
+        {
+            Console.Clear();
+            Console.WriteLine("Black Jack Game!");
+            Console.WriteLine("---------------------------");
+            Console.WriteLine("Choose from the following options:");
+            Console.WriteLine("1. Play Game");
+            Console.WriteLine("9. Exit...");
         }
     }
 }

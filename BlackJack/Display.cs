@@ -176,10 +176,10 @@ namespace BlackJack
             Reset();
         }
 
-        public void PlayerBet(string name)
+        public void PlayerBet(string name, string amount)
         {
             Set(question);
-            Console.WriteLine("How much does Player {0} want to bet?", name);
+            Console.WriteLine("How much does Player {0} want to bet? ({0} has ${1} left.)", name, amount);
             Reset();
         }
 
