@@ -181,6 +181,24 @@ namespace UnitTests
             Assert.AreEqual(numberOfHandsActual, numberOfHandsExpected);
         }
 
+        [TestMethod]
+        public void PushBet_SinglePlayer_PushSucceeds()
+        {
+            Player player = new Player("Tester", 500);
+            int playerBet = 50;
+
+            player.Hands[0].Cards.Add(new Card("10", Suit.Spades));
+            player.Hands[0].Cards.Add(new Card("4", Suit.Hearts));
+
+            player.BetCash(playerBet);
+
+            Assert.AreEqual(player.Cash, 500 - playerBet);
+
+            player.PushBet();
+
+            Assert.AreEqual(player.Cash, 500);
+        }
+
         /*
         // TODO: 
          *  - Write cases for PushBet()
