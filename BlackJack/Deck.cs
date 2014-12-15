@@ -15,7 +15,7 @@ namespace BlackJack
             NumberOfDecks = numberOfDecks;
             TOTAL_CARDS = cardsInADeck * numberOfDecks;
             Initialize(numberOfDecks);
-            // DAL: Do we need to shuffle more than once? I wonder if there is some theory behind shuffling and random numbers.
+            // DAL: Do we need to shuffle more than once? I wonder if there is some theory behind shuffling and random numbers. If so, it may not apply to computer shuffles.
             Shuffle(3);
         }
 

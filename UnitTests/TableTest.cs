@@ -11,11 +11,14 @@ namespace UnitTests
         [TestMethod]
         public void Table_DealerIsPresent_Success()
         {
-            Table tbl = new Table(new Deck(3), new List<Player> { new Player("Tester", 500) });
-            var actualPlayers = tbl.Players.Count;
-            var expectedPlayers = 2;
+            // This hangs :( Fix. Send Halp
+            //Table tbl = new Table(new Deck(3), new List<Player> { new Player("Tester", 500) });
+            //var actualPlayers = tbl.Players.Count;
+            //var expectedPlayers = 2;
 
-            Assert.AreEqual(actualPlayers, expectedPlayers);
+            //Assert.AreEqual(actualPlayers, expectedPlayers);
+
+            throw new NotImplementedException();
         }
     }
 }

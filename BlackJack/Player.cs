@@ -34,6 +34,14 @@ namespace BlackJack
 
         public void BetCash(double money)
         {
+            if (money < 0)
+            {
+                money *= -1;
+            }
+            if (money == 0)
+            {
+                throw new ArgumentException("value needs to be non-zero");
+            }
             Bet += money;
             Cash -= money;
             // Is throwing an exception here the best way to do this?
