@@ -28,3 +28,16 @@ The most complex class is the <code>Table</code> class which actually plays the 
 Currently, the game is started in a Program class which allows you to play the game. So, that's real.
 
 The solution also contains a few Status classes as well as a Unit Test project.
+
+The Future
+============
+There are a number of features that I would like to implement later on in the 2.0 version. 
+- For starters, I'd like to see an actual UI. Wouldn't that be nice?
+- Secondly, there should be a simulation mode, and an option to play with AI
+- If possible, I would like there to be some sort of multiplayer (though, this may not be available until v3.0)
+- Ability to change "house rules"
+- Ability to create player settings
+- Player "advice"
+- Custom players (so you don't have to play with the player names that I decide).
+- Full-fledged unit tests!!
+
