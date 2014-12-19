@@ -13,7 +13,9 @@ Otherwise, each player has a few options:
 - Double - The player can double his or her bet, but only get ONE more card. This is most advantageous to do with a score of 9, 10, or 11 and some casinos only allow doubles on these cards. Other casinos will allow doubles on any 2 cards, but a player can only ever double as his or her THIRD card. 
 - Split - If two cards are the same value, then the player can opt to "split" his or her cards, which means that they effectively are playing two hands with two separate bets. The dealer will deal the first card of the first hand, and the player will play normally with that hand until he or she either stands or busts, and then will move onto the second hand. Some casinos only allow one card per split, and some casinos have rules around splitting aces. 
 - Stand - If the player is alright with the cards he or she has, and the sum of those cards are less than 21, then the player can stand and end his or her turn. A player's turn will always end with a stand or a bust.
+
 <br>
+
 Once all players have made their decisions, the dealer will reveal his or her second card, and then hit until he or she reaches 17. Once 17 is reached, the dealer must stand, and any player with a score above the dealer will win. If the dealer busts, then all hands that are not busted will win and bets are awarded. The players then bet again and another round begins.
 
 The Solution
