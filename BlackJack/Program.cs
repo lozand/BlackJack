@@ -95,9 +95,10 @@ namespace BlackJack
             players.Add(new Player("Matt",500));
             players.Add(new Player("John",500));
             players.Add(new Player("Ruben",500));
+            Table table = new Table(deck, players);
             while (playAgain == "y")
             {
-                Table table = new Table(deck, players);
+                table.StartGame();
                 
                 display.SkipLine();
                 foreach (Player player in players)

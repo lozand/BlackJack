@@ -13,13 +13,7 @@ namespace BlackJack
             Deck = deck;
             Players = players;
             TableStatus = TableStatus.Open;
-            ReshuffleIfNecessary();
-            SetInitialBets();
-            DealInitialHand();
-            Play();
-            EndGame();
-            Results();
-            ClearHand();
+            
         }
         public List<Player> Players { get; set; }
         public Player Dealer { get; set; }
@@ -35,6 +29,16 @@ namespace BlackJack
         private Display show = new Display();
 
         #region Public Methods
+        public void StartGame()
+        {
+            ReshuffleIfNecessary();
+            SetInitialBets();
+            DealInitialHand();
+            Play();
+            EndGame();
+            Results();
+            ClearHand();
+        }
         public void SetInitialBets()
         {
             Deck.ProbabilityOfGettingBlackJack();
