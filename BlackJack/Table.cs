@@ -20,11 +20,10 @@ namespace BlackJack
         public Deck Deck { get; set; }
         public TableStatus TableStatus { get; set; }
 
-        // Eventually, I would like to move properties like this into a settings.xml file. Different casinos have different rules
-        private const int DealerStand = 17;
-        private const int CardsNecessaryToPlay = 20;
+        private int DealerStand = AppConfig.DealerStand;
+        private int CardsNecessaryToPlay = AppConfig.CardsNecessaryToPlay;
 
-        private const string hit = "hit", stand = "stand", dbl = "double", split = "split", prob = "prob";
+        private const string hit = "hit", stand = "stand", dbl = "double", split = "split", prob = "prob", begin = "begin";
 
         private Display show = new Display();
 
@@ -285,10 +284,10 @@ namespace BlackJack
             
             int total = thisHand.Total;
             thisHand.Status = HandStatus.InPlay;
-            string option = "begin";
+            string option = begin;
             string probabilityOptions = "";
             string probOption = "";
-            while (total < 21 && (option.ToLower() == hit || option.ToLower() == "begin" || option.ToLower() == prob) && thisHand.Status != HandStatus.Bust)
+            while (total < 21 && (option.ToLower() == hit || option.ToLower() == begin || option.ToLower() == prob) && thisHand.Status != HandStatus.Bust)
             {
                 UpdateTable(true, true);
                 if (probabilityOptions != "") { show.ProbabilityOfCards(Deck.ProbabilityOfCard(probabilityOptions)); probabilityOptions = ""; }
@@ -309,7 +308,7 @@ namespace BlackJack
                     {
                         var message = "You do not have enough money to double";
                         show.AddToMessage(message);
-                        option = "begin";
+                        option = begin;
                     }
                     else if (thisHand.Status != HandStatus.Bust)
                     {
@@ -329,7 +328,7 @@ namespace BlackJack
                     {
                         var message = "Split is not valid in this situation.";
                         show.AddToMessage(message);
-                        option = "Begin";
+                        option = begin;
                     }
                 }
                 else if(lowerOption == prob)

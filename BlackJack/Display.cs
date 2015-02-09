@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlackJack.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading;
 
 namespace BlackJack
 {
-    public class Display
+    public class Display : IDisplay
     {
         public Display()
         {

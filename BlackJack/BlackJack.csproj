@@ -63,6 +63,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -71,10 +72,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppConfig.cs" />
     <Compile Include="Card.cs" />
     <Compile Include="Display.cs" />
     <Compile Include="Hand.cs" />
     <Compile Include="HandStatus.cs" />
+    <Compile Include="Interfaces\IDisplay.cs" />
     <Compile Include="PlayHand.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayerStatus.cs" />
@@ -86,6 +89,7 @@
     <Compile Include="TableStatus.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="BlackJack_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
