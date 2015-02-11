@@ -10,6 +10,8 @@ namespace BlackJack
     {
         public static int DealerStand = Int16.Parse(System.Configuration.ConfigurationManager.AppSettings["DealerStand"]);
         public static int CardsNecessaryToPlay = Int16.Parse(System.Configuration.ConfigurationManager.AppSettings["CardsNecessaryToPlay"]);
+        public static double Payout = Double.Parse(System.Configuration.ConfigurationManager.AppSettings["Payout"]);
+        public static double BlackJackPayout = Double.Parse(System.Configuration.ConfigurationManager.AppSettings["BlackJackPayout"]);
         
     }
 }

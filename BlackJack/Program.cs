@@ -107,7 +107,7 @@ namespace BlackJack
                 }
                 display.SkipLine();
                 Console.Write("Play Again? y/n  ");
-                playAgain = display.Read();
+                playAgain = Console.ReadLine();
                 display.Clear();
             }
         }

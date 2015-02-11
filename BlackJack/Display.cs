@@ -233,12 +233,6 @@ namespace BlackJack
             Console.WriteLine("");
         }
 
-        public string Read()
-        {
-            SkipLine();
-            return Console.ReadLine();
-        }
-
         public void Wait()
         {
             Thread.Sleep(500);

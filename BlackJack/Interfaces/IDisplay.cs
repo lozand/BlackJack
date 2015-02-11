@@ -61,8 +61,6 @@ namespace BlackJack.Interfaces
 
         void SkipLine();
 
-        string Read();
-
         void Wait();
     }
 }

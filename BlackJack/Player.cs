@@ -13,8 +13,10 @@ namespace BlackJack
             Hands = new List<Hand>();
             Hands.Add(new Hand());
             Cash = cash;
+            input = new Input();
         }
         public string Name { get; set; }
+        public Input input { get; set; }
         public List<Hand> Hands { get; set; }
         public PlayerStatus Status { get; set; }
         public double Bet { get; set; }
@@ -29,9 +31,13 @@ namespace BlackJack
 
         
         private Display log = new Display();
-        double payout = 2;
-        double blackJackPayout = 2.5;
+        double payout = AppConfig.Payout;
+        double blackJackPayout = AppConfig.BlackJackPayout;
 
+        public string GetInput()
+        {
+            return input.GetInput();
+        }
         public void BetCash(double money)
         {
             if (money < 0)

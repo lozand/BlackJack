@@ -23,7 +23,7 @@ namespace BlackJack
         private int DealerStand = AppConfig.DealerStand;
         private int CardsNecessaryToPlay = AppConfig.CardsNecessaryToPlay;
 
-        private const string hit = "hit", stand = "stand", dbl = "double", split = "split", prob = "prob", begin = "begin";
+        //private const string hit = "hit", stand = "stand", dbl = "double", split = "split", prob = "prob", begin = "begin";
 
         private Display show = new Display();
 
@@ -53,7 +53,7 @@ namespace BlackJack
                         double oldBet = player.Bet;
                         player.ClearBet();
                         show.PlayerBet(player.Name, player.Cash.ToString());
-                        string input = show.Read();
+                        string input = player.GetInput();
                         if (input == "0")
                         {
                             player.Status = PlayerStatus.NotPlaying;
@@ -284,65 +284,62 @@ namespace BlackJack
             
             int total = thisHand.Total;
             thisHand.Status = HandStatus.InPlay;
-            string option = begin;
+            string option = PlayerOption.begin.ToString();
             string probabilityOptions = "";
             string probOption = "";
-            while (total < 21 && (option.ToLower() == hit || option.ToLower() == begin || option.ToLower() == prob) && thisHand.Status != HandStatus.Bust)
+            while (total < 21 && (option.ToLower() == PlayerOption.hit.ToString() || option.ToLower() == PlayerOption.begin.ToString() || option.ToLower() == PlayerOption.prob.ToString()) && thisHand.Status != HandStatus.Bust)
             {
-                UpdateTable(true, true);
                 if (probabilityOptions != "") { show.ProbabilityOfCards(Deck.ProbabilityOfCard(probabilityOptions)); probabilityOptions = ""; }
+                UpdateTable(true, true);
                 show.PlayerOptions(player.Name);
-                option = show.Read();
+                option = player.GetInput();
                 if (option.IndexOf(' ') != -1) { probOption = option; option = option.Substring(0, option.IndexOf(' ')); }
                 show.Clear();
 
                 string lowerOption = option.ToLower();
 
-                if(lowerOption == hit)
-                {
-                    Hit(thisHand);
-                }
-                else if(lowerOption == dbl)
-                {
-                    if (!Double(player, thisHand))
-                    {
-                        var message = "You do not have enough money to double";
-                        show.AddToMessage(message);
-                        option = begin;
-                    }
-                    else if (thisHand.Status != HandStatus.Bust)
-                    {
-                        thisHand.Status = HandStatus.Played;
-                    }
-                }
-                else if(lowerOption == split)
-                {
-                    if (thisHand.Cards[0].Name == thisHand.Cards[1].Name)
-                    {
-                        // We also need to verify that the player has enough money to split.
-                        Split(ref player);
-                        option = stand;
-                        thisHand.Status = HandStatus.Played;
-                    }
-                    else
-                    {
-                        var message = "Split is not valid in this situation.";
-                        show.AddToMessage(message);
-                        option = begin;
-                    }
-                }
-                else if(lowerOption == prob)
-                {
-                    probabilityOptions = CheckProbability(probOption);
-                }
-                else
-                {
-                    option = stand;
-                    thisHand.Status = HandStatus.Played;
-                }
+                PlayerOption playerOption = GetIntOption(lowerOption);
 
+                switch (playerOption)
+                {
+                    case PlayerOption.hit:
+                        Hit(thisHand);
+                        break;
+                    case PlayerOption.dbl:
+                        if (!Double(player, thisHand))
+                        {
+                            var message = "You do not have enough money to double";
+                            show.AddToMessage(message);
+                            option = PlayerOption.begin.ToString();
+                        }
+                        else if (thisHand.Status != HandStatus.Bust)
+                        {
+                            thisHand.Status = HandStatus.Played;
+                        }
+                        break;
+                    case PlayerOption.split:
+                        if (thisHand.Cards[0].Name == thisHand.Cards[1].Name)
+                        {
+                            // We also need to verify that the player has enough money to split.
+                            Split(ref player);
+                            option = PlayerOption.stand.ToString();
+                            thisHand.Status = HandStatus.Played;
+                        }
+                        else
+                        {
+                            var message = "Split is not valid in this situation.";
+                            show.AddToMessage(message);
+                            option = PlayerOption.begin.ToString();
+                        }
+                        break;
+                    case PlayerOption.prob:
+                        probabilityOptions = CheckProbability(probOption);
+                        break;
+                    case PlayerOption.stand:
+                    default:
+                        break;
+                }
             }
-            
         }
 
         private void ShowPlayerCards()
@@ -421,6 +418,30 @@ namespace BlackJack
         private string CheckProbability(string data)
         {
             return data.Substring(data.IndexOf(' '));
+        }
+
+        private PlayerOption GetIntOption(string option)
+        {
+            if (option == PlayerOption.hit.ToString())
+            {
+                return PlayerOption.hit;
+            }
+            else if (option == PlayerOption.dbl.ToString())
+            {
+                return PlayerOption.dbl;
+            }
+            else if (option == PlayerOption.split.ToString())
+            {
+                return PlayerOption.split;
+            }
+            else if (option == PlayerOption.prob.ToString())
+            {
+                return PlayerOption.prob;
+            }
+            else
+            {
+                return PlayerOption.stand;
+            }
         }
 
         private void UpdateTable(bool hideDealerCards = true, bool showProbability = false)
