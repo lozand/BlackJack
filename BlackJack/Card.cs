@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlackJack.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,12 +8,14 @@ namespace BlackJack
 {
     public class Card
     {
-        public Card(string name, Suit suit)
+        //public Card(string name, Suit suit)
+        //{
+        //    Initialize(name, suit, new Display());
+        //}
+
+        public Card(string name, Suit suit, IDisplay display)
         {
-            this.Name = name;
-            this.Suit = suit;
-            this.NumberValue = SetNumberValue(name);
-            this.SuitSymbol = SetSuitSymbol(suit);
+            Initialize(name, suit, display);
         }
         
         public string Name { get; set; }
@@ -20,7 +23,7 @@ namespace BlackJack
         public char SuitSymbol { get; set; }
         public int NumberValue { get; set; }
 
-        Display show = new Display();
+        IDisplay show;
 
         /// <summary>
         /// Display function. Shows card in format "2 - Hearts" or "X - Clubs"
@@ -46,6 +49,15 @@ namespace BlackJack
         public bool IsTenCard()
         {
             return NumberValue == 10;
+        }
+
+        private void Initialize(string name, Suit suit, IDisplay display)
+        {
+            this.Name = name;
+            this.Suit = suit;
+            this.NumberValue = SetNumberValue(name);
+            this.SuitSymbol = SetSuitSymbol(suit);
+            this.show = display;
         }
 
 

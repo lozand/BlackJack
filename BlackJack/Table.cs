@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlackJack.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,12 +10,13 @@ namespace BlackJack
     {
         public Table(Deck deck, List<Player> players)
         {
-            Dealer = new Player("Dealer", 0);
-            Deck = deck;
-            Players = players;
-            TableStatus = TableStatus.Open;
-            
+            Initialize(deck, players, new Display());
         }
+        public Table(Deck deck, List<Player> players, IDisplay display)
+        {
+            Initialize(deck, players, display);
+        }
+
         public List<Player> Players { get; set; }
         public Player Dealer { get; set; }
         public Deck Deck { get; set; }
@@ -23,9 +25,7 @@ namespace BlackJack
         private int DealerStand = AppConfig.DealerStand;
         private int CardsNecessaryToPlay = AppConfig.CardsNecessaryToPlay;
 
-        //private const string hit = "hit", stand = "stand", dbl = "double", split = "split", prob = "prob", begin = "begin";
-
-        private Display show = new Display();
+        private IDisplay show;
 
         #region Public Methods
         public void StartGame()
@@ -193,6 +193,14 @@ namespace BlackJack
         #endregion
 
         #region Private Methods
+        private void Initialize(Deck deck, List<Player> players, IDisplay display)
+        {
+            Dealer = new Player("Dealer", 0, display);
+            Deck = deck;
+            Players = players;
+            TableStatus = TableStatus.Open;
+            show = display;
+        }
         /// <summary>
         /// Deals one card to each player and then one to the dealer.
         /// This should only be called in the initial card deal.

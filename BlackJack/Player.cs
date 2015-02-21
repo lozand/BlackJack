@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlackJack.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,14 +8,14 @@ namespace BlackJack
 {
     public class Player
     {
-        public Player(string name, double cash)
+        public Player(string name, double cash, IDisplay disp)
         {
-            Name = name;
-            Hands = new List<Hand>();
-            Hands.Add(new Hand());
-            Cash = cash;
-            input = new Input();
+            Initialize(name, cash, disp);
         }
+        //public Player(string name, double cash)
+        //{
+        //    Initialize(name, cash, new Display());
+        //}
         public string Name { get; set; }
         public Input input { get; set; }
         public List<Hand> Hands { get; set; }
@@ -29,8 +30,8 @@ namespace BlackJack
             }
         }
 
-        
-        private Display log = new Display();
+
+        private IDisplay log;
         double payout = AppConfig.Payout;
         double blackJackPayout = AppConfig.BlackJackPayout;
 
@@ -157,6 +158,16 @@ namespace BlackJack
         public void ShowPlayerCash()
         {
             log.PlayerCash(Name, Cash);
+        }
+
+        private void Initialize(string name, double cash, IDisplay disp)
+        {
+            Name = name;
+            Hands = new List<Hand>();
+            Hands.Add(new Hand());
+            Cash = cash;
+            input = new Input();
+            log = disp;
         }
     }
 }

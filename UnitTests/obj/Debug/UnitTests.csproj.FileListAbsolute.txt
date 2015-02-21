@@ -5,3 +5,10 @@ D:\Libraries\Documents\Visual Studio 2010\BlackJack\UnitTests\obj\Debug\UnitTest
 D:\Libraries\Documents\Visual Studio 2010\BlackJack\UnitTests\obj\Debug\UnitTests.pdb
 D:\Libraries\Documents\Visual Studio 2010\BlackJack\UnitTests\bin\Debug\BlackJack.exe
 D:\Libraries\Documents\Visual Studio 2010\BlackJack\UnitTests\bin\Debug\BlackJack.pdb
+D:\Libraries\Documents\Projects\BlackJack\UnitTests\bin\Debug\UnitTests.dll
+D:\Libraries\Documents\Projects\BlackJack\UnitTests\bin\Debug\UnitTests.pdb
+D:\Libraries\Documents\Projects\BlackJack\UnitTests\bin\Debug\BlackJack.exe
+D:\Libraries\Documents\Projects\BlackJack\UnitTests\bin\Debug\BlackJack.pdb
+D:\Libraries\Documents\Projects\BlackJack\UnitTests\obj\Debug\UnitTests.csprojResolveAssemblyReference.cache
+D:\Libraries\Documents\Projects\BlackJack\UnitTests\obj\Debug\UnitTests.dll
+D:\Libraries\Documents\Projects\BlackJack\UnitTests\obj\Debug\UnitTests.pdb

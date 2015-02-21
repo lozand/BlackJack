@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlackJack.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,13 +11,16 @@ namespace BlackJack
         /// <summary>
         /// Initializes a new deck and shuffles
         /// </summary>
-        public Deck(int numberOfDecks = 1)
+        //public Deck(int numberOfDecks = 1)
+        //{
+        //    show = new Display();
+        //    Initialize(numberOfDecks);
+        //}
+
+        public Deck(int numberOfDecks, IDisplay disp)
         {
-            NumberOfDecks = numberOfDecks;
-            TOTAL_CARDS = cardsInADeck * numberOfDecks;
+            show = disp;
             Initialize(numberOfDecks);
-            // DAL: Do we need to shuffle more than once? I wonder if there is some theory behind shuffling and random numbers. If so, it may not apply to computer shuffles.
-            Shuffle(3);
         }
 
         #region Properties
@@ -25,7 +29,7 @@ namespace BlackJack
         public int TOTAL_CARDS = 0;
         public int cardsInADeck = 52;
         public int NumberOfDecks;
-        private Display show = new Display();
+        private IDisplay show;
         #endregion
 
         #region Public/General Methods
@@ -44,7 +48,7 @@ namespace BlackJack
             PlayedCards.Clear();
             // Since the below steps are completed in the constructor maybe it's worth bringing these methods out into their own method.
             TOTAL_CARDS = cardsInADeck * numberOfDecks;
-            Initialize(numberOfDecks);
+            SetCards(numberOfDecks);
             Shuffle(3);
         }
 
@@ -108,10 +112,19 @@ namespace BlackJack
         #endregion
 
         #region Private Methods
+        private void Initialize(int numberOfDecks)
+        {
+            NumberOfDecks = numberOfDecks;
+            TOTAL_CARDS = cardsInADeck * numberOfDecks;
+            SetCards(numberOfDecks);
+            // DAL: Do we need to shuffle more than once? I wonder if there is some theory behind shuffling and random numbers. If so, it may not apply to computer shuffles.
+            Shuffle(3);
+        }
+
         /// <summary>
         /// Creates new cards for the deck. X = 10, 
         /// </summary>
-        private void Initialize(int numberOfDecks)
+        private void SetCards(int numberOfDecks)
         {
             List<Suit> suites = new List<Suit>();
             suites.Add(Suit.Hearts);
@@ -127,7 +140,7 @@ namespace BlackJack
                 {
                     for (int k = 0; k < numberOfDecks; k++)
                     {
-                        RemainingCards.Add(new Card(names[j], suites[i]));
+                        RemainingCards.Add(new Card(names[j], suites[i], show));
                     }
                 }
             }
@@ -247,7 +260,7 @@ namespace BlackJack
             if (removeMe.FirstOrDefault() != null)
             {
                 RemainingCards.Remove(removeMe.FirstOrDefault());
-                PlayedCards.Add(new Card(name, suite));
+                PlayedCards.Add(new Card(name, suite, show));
             }
             else
             {

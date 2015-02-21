@@ -9,8 +9,8 @@ namespace BlackJack
     {
         static void Main(string[] args)
         {
-            Deck myDeck = new Deck(3);
             Display show = new Display();
+            Deck myDeck = new Deck(3, show);
             //myDeck.ShowCardsRemaining();
             const string Exit = "9",
                 Deal = "deal",
@@ -66,7 +66,7 @@ namespace BlackJack
             deck.ShowCardsRemaining();
         }
 
-        private static void Reset(Deck deck, Display show) // This is so dumb.
+        private static void Reset(Deck deck, Display show) 
         {
             show.AskDecksToCreate();
             string decks = Console.ReadLine();
@@ -91,10 +91,10 @@ namespace BlackJack
             
             Console.WriteLine("");
             List<Player> players = new List<Player>();
-            players.Add(new Player("Daniel",500));
-            players.Add(new Player("Matt",500));
-            players.Add(new Player("John",500));
-            players.Add(new Player("Ruben",500));
+            players.Add(new Player("Daniel",500, display));
+            players.Add(new Player("Matt", 500, display));
+            players.Add(new Player("John", 500, display));
+            players.Add(new Player("Ruben", 500, display));
             Table table = new Table(deck, players);
             while (playAgain == "y")
             {
