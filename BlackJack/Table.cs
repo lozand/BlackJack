@@ -189,6 +189,7 @@ namespace BlackJack
             {
                 player.ClearHand();
             }
+            Dealer.ClearHand();
         }
         #endregion
 
@@ -345,6 +346,7 @@ namespace BlackJack
                         break;
                     case PlayerOption.stand:
                     default:
+                        thisHand.Status = HandStatus.Played;
                         break;
                 }
             }
@@ -434,7 +436,7 @@ namespace BlackJack
             {
                 return PlayerOption.hit;
             }
-            else if (option == PlayerOption.dbl.ToString())
+            else if (option == PlayerOption.dbl.ToString() || option == "double")
             {
                 return PlayerOption.dbl;
             }
