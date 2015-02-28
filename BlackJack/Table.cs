@@ -52,8 +52,8 @@ namespace BlackJack
                         betOk = false;
                         double oldBet = player.Bet;
                         player.ClearBet();
-                        show.PlayerBet(player.Name, player.Cash.ToString());
-                        string input = player.GetInput();
+                        show.PlayerToBet(player.Name, player.Cash.ToString());
+                        string input = player.GetBetInput();
                         if (input == "0")
                         {
                             player.Status = PlayerStatus.NotPlaying;
@@ -61,7 +61,7 @@ namespace BlackJack
                         }
                         else if (input != "rebet")
                         {
-                            int bet = Int32.Parse(input);
+                            double bet = double.Parse(input);
                             if (bet <= player.Cash)
                             {
                                 player.BetCash(bet);
@@ -301,7 +301,7 @@ namespace BlackJack
                 if (probabilityOptions != "") { show.ProbabilityOfCards(Deck.ProbabilityOfCard(probabilityOptions)); probabilityOptions = ""; }
                 UpdateTable(true, true);
                 show.PlayerOptions(player.Name);
-                option = player.GetInput();
+                option = player.GetPlayInput(thisHand, Dealer.Hands[0].Cards.First());
                 if (option.IndexOf(' ') != -1) { probOption = option; option = option.Substring(0, option.IndexOf(' ')); }
                 show.Clear();
 

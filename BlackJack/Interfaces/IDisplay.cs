@@ -47,7 +47,9 @@ namespace BlackJack.Interfaces
 
         void PlayerOptions(string name);
 
-        void PlayerBet(string name, string amount);
+        void PlayerToBet(string name, string amount);
+
+        void PlayerBet(string name, double amount);
 
         void Card(string name, string suit, string suitSymbol);
 

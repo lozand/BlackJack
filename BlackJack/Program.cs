@@ -14,7 +14,7 @@ namespace BlackJack
             Deck myDeck = new Deck(3, show);
             //myDeck.ShowCardsRemaining();
             const string Exit = "9",
-                Deal = "deal",
+                Infinite = "2",
                 ProbabilityOfHighCard = "highcard",
                 PlayCard = "playcard",
                 Reset = "reset",
@@ -41,9 +41,9 @@ namespace BlackJack
                     //case Reset:
                     //    Program.Reset(myDeck, show);
                     //    break;
-                    //case ShowCards:
-                    //    Program.ShowCards(myDeck);
-                    //    break;
+                    case Infinite:
+                        Program.Infinite(myDeck, show);
+                        break;
                     case PlayGame:
                         Program.PlayTheGame(myDeck, show);
                         break;
@@ -92,10 +92,10 @@ namespace BlackJack
             
             Console.WriteLine("");
             List<Player> players = new List<Player>();
-            players.Add(new Player("Daniel",500, display));
-            players.Add(new Player("Matt", 500, display));
-            players.Add(new Player("John", 500, display));
-            players.Add(new Player("Ruben", 500, display));
+            players.Add(new Player("Daniel",500, display, false));
+            players.Add(new Player("Matt", 500, display, true));
+            players.Add(new Player("John", 500, display, true));
+            players.Add(new Player("Ruben", 500, display, true));
             Table table = new Table(deck, players);
             while (playAgain == "y")
             {
@@ -113,6 +113,44 @@ namespace BlackJack
             }
         }
 
+        private static void Infinite(IDeck deck, Display display)
+        {
+            bool playAgain = true;
+            int timesPlayed = 0;
+
+            Console.WriteLine("");
+            List<Player> players = new List<Player>();
+            players.Add(new Player("Daniel", 500, display, true));
+            players.Add(new Player("Matt", 500, display, true));
+            players.Add(new Player("John", 500, display, true));
+            players.Add(new Player("Ruben", 500, display, true));
+            Table table = new Table(deck, players);
+            while (playAgain)
+            {
+                display.SkipLine();
+                display.Clear();
+                playAgain = false;
+                table.StartGame();
+
+                display.SkipLine();
+                foreach (Player player in players)
+                {
+                    player.ShowPlayerCash();
+                    if (player.Cash > 0)
+                    {
+                        playAgain = true;
+                    }
+                }
+                timesPlayed += 1;
+                Console.WriteLine("At least 1 player still has money. Playing again. Times played: {0}", timesPlayed);
+                display.Wait();
+                display.Wait();
+            }
+            display.Wait();
+            display.Wait();
+            Console.ReadLine();
+        }
+
         private static void DisplayOptions()
         {
             Console.Clear();
@@ -120,6 +158,7 @@ namespace BlackJack
             Console.WriteLine("---------------------------");
             Console.WriteLine("Choose from the following options:");
             Console.WriteLine("1. Play Game");
+            Console.WriteLine("2. Infinite Autoplay");
             Console.WriteLine("9. Exit...");
         }
     }

@@ -8,14 +8,15 @@ namespace BlackJack
 {
     public class Player
     {
-        public Player(string name, double cash, IDisplay disp)
+        public Player(string name, double cash, IDisplay disp, bool isAI = false)
         {
-            Initialize(name, cash, disp);
+            Initialize(name, cash, disp, isAI);
         }
-        //public Player(string name, double cash)
-        //{
-        //    Initialize(name, cash, new Display());
-        //}
+        public Player(string name, double cash, bool isAI = false)
+        {
+            Initialize(name, cash, new Display(), isAI);
+        }
+
         public string Name { get; set; }
         public Input input { get; set; }
         public List<Hand> Hands { get; set; }
@@ -34,11 +35,37 @@ namespace BlackJack
         private IDisplay log;
         double payout = AppConfig.Payout;
         double blackJackPayout = AppConfig.BlackJackPayout;
+        bool IsAi;
 
-        public string GetInput()
+        private string GetPlayerInput()
         {
             return input.GetInput();
         }
+
+        public string GetBetInput()
+        {
+            if (!IsAi)
+            {
+                return GetPlayerInput();
+            }
+            else
+            {
+                return GetBetDecision();
+            }
+        }
+
+        public string GetPlayInput(Hand myHand, ICard dealerCard)
+        {
+            if (!IsAi)
+            {
+                return GetPlayerInput();
+            }
+            else
+            {
+                return GetPlayDecision(myHand, dealerCard);
+            }
+        }
+
         public void BetCash(double money)
         {
             if (money < 0)
@@ -160,7 +187,7 @@ namespace BlackJack
             log.PlayerCash(Name, Cash);
         }
 
-        private void Initialize(string name, double cash, IDisplay disp)
+        private void Initialize(string name, double cash, IDisplay disp, bool isAi)
         {
             Name = name;
             Hands = new List<Hand>();
@@ -168,6 +195,53 @@ namespace BlackJack
             Cash = cash;
             input = new Input();
             log = disp;
+            IsAi = isAi;
+        }
+
+        private string GetBetDecision()
+        {
+            // Not sure about this betting logic. I'll leave it in for now.
+            // May have to create certain "personalities" for each betting strategy
+            double moneyToBet = 0;
+            if (Cash > 50)
+            {
+                moneyToBet = ((double)Cash * .1);
+            }
+            else
+            {
+                moneyToBet = 5;
+            }
+
+            moneyToBet = Math.Round(moneyToBet);
+
+            log.PlayerBet(Name, moneyToBet);
+            log.Wait();
+            return moneyToBet.ToString();
+        }
+
+        private string GetPlayDecision(Hand myHand, ICard dealerCard)
+        {
+            log.Wait();
+            int sumOfPlayerHand = myHand.Total;
+            int sumDealerCard = ((Card)dealerCard).NumberValue;
+
+            //simple logic 
+            if (sumOfPlayerHand >= 17)
+            {
+                return "stand";
+            }
+            else if (sumOfPlayerHand < 11 || (sumOfPlayerHand < 17 && sumDealerCard >= 7))
+            {
+                return "hit";
+            }
+            else if (sumOfPlayerHand < 17 && sumDealerCard < 7)
+            {
+                return "stand";
+            }
+            else
+            {
+                return "hit";
+            }
         }
     }
 }
