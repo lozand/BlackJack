@@ -8,18 +8,18 @@ namespace BlackJack
 {
     public class Table
     {
-        public Table(Deck deck, List<Player> players)
+        public Table(IDeck deck, List<Player> players)
         {
             Initialize(deck, players, new Display());
         }
-        public Table(Deck deck, List<Player> players, IDisplay display)
+        public Table(IDeck deck, List<Player> players, IDisplay display)
         {
             Initialize(deck, players, display);
         }
 
         public List<Player> Players { get; set; }
         public Player Dealer { get; set; }
-        public Deck Deck { get; set; }
+        public IDeck Deck { get; set; }
         public TableStatus TableStatus { get; set; }
 
         private int DealerStand = AppConfig.DealerStand;
@@ -194,7 +194,7 @@ namespace BlackJack
         #endregion
 
         #region Private Methods
-        private void Initialize(Deck deck, List<Player> players, IDisplay display)
+        private void Initialize(IDeck deck, List<Player> players, IDisplay display)
         {
             Dealer = new Player("Dealer", 0, display);
             Deck = deck;
@@ -212,13 +212,13 @@ namespace BlackJack
             {
                 if (player.Status != PlayerStatus.NotPlaying)
                 {
-                    Card card = Deck.DealNextCard();
+                    ICard card = Deck.DealNextCard();
                     player.Hands.First().Cards.Add(card);
                     UpdateTable(true, true);
                     show.Wait();
                 }
             }
-            Card dealerCard = Deck.DealNextCard();
+            ICard dealerCard = Deck.DealNextCard();
             Dealer.Hands.First().Cards.Add(dealerCard);
             UpdateTable(true, true);
             show.Wait();
@@ -377,14 +377,14 @@ namespace BlackJack
         /// Deals the next card and assigns it out.
         /// </summary>
         /// <returns></returns>
-        private Card NextCard()
+        private ICard NextCard()
         {
             return Deck.DealNextCard();
         }
 
         private void Hit(Hand hand)
         {
-            Card card = NextCard();
+            ICard card = NextCard();
             hand.Cards.Add(card);
             UpdateTable();
             if (hand.Total > 21)

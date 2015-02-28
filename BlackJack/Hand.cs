@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlackJack.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,7 @@ namespace BlackJack
         {
             AcesReduced = false;
             Status = HandStatus.Waiting;
-            Cards = new List<Card>();
+            Cards = new List<ICard>();
         }
 
         /// <summary>
@@ -19,18 +20,18 @@ namespace BlackJack
         /// </summary>
         bool AcesReduced = false;
 
-        private List<Card> cards { get; set; }
+        private List<ICard> cards { get; set; }
 
         /// <summary>
         /// Represents the cards in the hand. Duh.
         /// </summary>
-        public List<Card> Cards
+        public List<ICard> Cards
         {
             get
             {
                 if (Total > 21 && !AcesReduced)
                 {
-                    foreach (Card card in cards)
+                    foreach (ICard card in cards)
                     {
                         if (card.Name == "A" && card.NumberValue == 11 && !AcesReduced)
                         {

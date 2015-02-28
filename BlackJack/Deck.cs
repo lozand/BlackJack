@@ -6,7 +6,7 @@ using System.Text;
 
 namespace BlackJack
 {
-    public class Deck
+    public class Deck : IDeck
     {
         /// <summary>
         /// Initializes a new deck and shuffles
@@ -24,11 +24,11 @@ namespace BlackJack
         }
 
         #region Properties
-        public List<Card> RemainingCards = new List<Card>();
-        public List<Card> PlayedCards = new List<Card>();
+        public List<ICard> RemainingCards = new List<ICard>();
+        public List<ICard> PlayedCards = new List<ICard>();
         public int TOTAL_CARDS = 0;
         public int cardsInADeck = 52;
-        public int NumberOfDecks;
+        public int NumberOfDecks { get; set; }
         private IDisplay show;
         #endregion
 
@@ -56,7 +56,7 @@ namespace BlackJack
         /// Deals the next card and returns it.
         /// </summary>
         /// <returns></returns>
-        public Card DealNextCard()
+        public ICard DealNextCard()
         {
             var nextCard = RemainingCards.FirstOrDefault();
             RemainingCards.Remove(nextCard);
@@ -154,11 +154,11 @@ namespace BlackJack
             for (int i = 0; i < timesToShulffle; i++)
             {
                 Random rand = new Random();
-                List<Card> temp = new List<Card>();
+                List<ICard> temp = new List<ICard>();
                 int remaining = TOTAL_CARDS;
                 while (remaining > 0)
                 {
-                    Card card = RemainingCards[rand.Next(0, remaining)];
+                    ICard card = RemainingCards[rand.Next(0, remaining)];
                     temp.Add(card);
                     RemainingCards.Remove(card);
                     remaining--;

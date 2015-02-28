@@ -6,7 +6,7 @@ using System.Text;
 
 namespace BlackJack
 {
-    public class Card
+    public class Card : ICard
     {
         //public Card(string name, Suit suit)
         //{
@@ -17,6 +17,11 @@ namespace BlackJack
         {
             Initialize(name, suit, display);
         }
+
+        //public string Name()
+        //{
+        //    return cardName;
+        //}
         
         public string Name { get; set; }
         public Suit Suit { get; set; }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlackJack.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -85,7 +86,7 @@ namespace BlackJack
             deck.ProbabilityOfHighCard();
         }
 
-        private static void PlayTheGame(Deck deck, Display display)
+        private static void PlayTheGame(IDeck deck, Display display)
         {
             string playAgain = "y";
             
