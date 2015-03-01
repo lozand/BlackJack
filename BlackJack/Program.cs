@@ -15,7 +15,7 @@ namespace BlackJack
             //myDeck.ShowCardsRemaining();
             const string Exit = "9",
                 Infinite = "2",
-                ProbabilityOfHighCard = "highcard",
+                CustomDeck = "5",
                 PlayCard = "playcard",
                 Reset = "reset",
                 ShowCards = "showcards",
@@ -38,9 +38,9 @@ namespace BlackJack
                     //case PlayCard:
                     //    Program.PlayCard(myDeck);
                     //    break;
-                    //case Reset:
-                    //    Program.Reset(myDeck, show);
-                    //    break;
+                    case CustomDeck:
+                        Program.SetCustomDeck(out myDeck, show);
+                        break;
                     case Infinite:
                         Program.Infinite(myDeck, show);
                         break;
@@ -151,6 +151,13 @@ namespace BlackJack
             Console.ReadLine();
         }
 
+        private static void SetCustomDeck(out Deck deck, IDisplay disp)
+        {
+            List<ICard> customDeck = CustomDeck.GetXml();
+            deck = new Deck(customDeck, disp);
+
+        }
+
         private static void DisplayOptions()
         {
             Console.Clear();
@@ -159,6 +166,7 @@ namespace BlackJack
             Console.WriteLine("Choose from the following options:");
             Console.WriteLine("1. Play Game");
             Console.WriteLine("2. Infinite Autoplay");
+            Console.WriteLine("5. Use a custom deck");
             Console.WriteLine("9. Exit...");
         }
     }

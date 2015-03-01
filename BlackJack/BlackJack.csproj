@@ -82,6 +82,7 @@
   <ItemGroup>
     <Compile Include="AppConfig.cs" />
     <Compile Include="Card.cs" />
+    <Compile Include="CustomDeck.cs" />
     <Compile Include="Display.cs" />
     <Compile Include="Hand.cs" />
     <Compile Include="HandStatus.cs" />
@@ -128,6 +129,9 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CustomDeck.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

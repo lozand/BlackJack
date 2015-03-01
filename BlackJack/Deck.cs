@@ -17,6 +17,16 @@ namespace BlackJack
         //    Initialize(numberOfDecks);
         //}
 
+        public Deck(List<ICard> customDeck, IDisplay disp)
+        {
+            RemainingCards.Clear();
+            PlayedCards.Clear();
+            RemainingCards = customDeck;
+            show = disp;
+            usingCustomDeck = true;
+            NumberOfDecks = 1;
+        }
+
         public Deck(int numberOfDecks, IDisplay disp)
         {
             show = disp;
@@ -30,6 +40,7 @@ namespace BlackJack
         public int cardsInADeck = 52;
         public int NumberOfDecks { get; set; }
         private IDisplay show;
+        private bool usingCustomDeck = false;
         #endregion
 
         #region Public/General Methods

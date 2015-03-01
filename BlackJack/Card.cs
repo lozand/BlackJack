@@ -8,10 +8,10 @@ namespace BlackJack
 {
     public class Card : ICard
     {
-        //public Card(string name, Suit suit)
-        //{
-        //    Initialize(name, suit, new Display());
-        //}
+        public Card(string name, Suit suit)
+        {
+            Initialize(name, suit, new Display());
+        }
 
         public Card(string name, Suit suit, IDisplay display)
         {
