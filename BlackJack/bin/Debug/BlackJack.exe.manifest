@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BlackJack.exe" size="32768">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BlackJack.exe" size="33280">
       <assemblyIdentity name="BlackJack" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>8HrI2oXWkW8gGCfmm5tGkzCXjio=</dsig:DigestValue>
+        <dsig:DigestValue>IH32xDhQFJ6jY8MnhApCRoI5MKU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -62,13 +62,13 @@
       <dsig:DigestValue>jU61UECPyAa37WF1SeYBwsvU8T4=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="CustomDeck.xml" size="481" writeableType="applicationData">
+  <file name="CustomDeck.xml" size="595" writeableType="applicationData">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>qzJ2JLmbNMNAr1WA+GjWJqL2v70=</dsig:DigestValue>
+      <dsig:DigestValue>AkwsS1JG3vQT/fTmDWzVt3rpwNU=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

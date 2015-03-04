@@ -207,6 +207,10 @@ namespace BlackJack
             {
                 moneyToBet = ((double)Cash * .1);
             }
+            else if (Cash < 5)
+            {
+                moneyToBet = Cash;
+            }
             else
             {
                 moneyToBet = 5;

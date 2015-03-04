@@ -3,22 +3,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace BlackJack
 {
     public class Program
     {
+        public static bool customMode = false;
         static void Main(string[] args)
         {
             Display show = new Display();
             Deck myDeck = new Deck(3, show);
+            Deck originalDeck = myDeck;
             //myDeck.ShowCardsRemaining();
             const string Exit = "9",
                 Infinite = "2",
                 CustomDeck = "5",
-                PlayCard = "playcard",
-                Reset = "reset",
-                ShowCards = "showcards",
                 PlayGame = "1";
 
             DisplayOptions();
@@ -39,7 +39,7 @@ namespace BlackJack
                     //    Program.PlayCard(myDeck);
                     //    break;
                     case CustomDeck:
-                        Program.SetCustomDeck(out myDeck, show);
+                        Program.SetCustomDeck(out myDeck, originalDeck, show);
                         break;
                     case Infinite:
                         Program.Infinite(myDeck, show);
@@ -86,10 +86,9 @@ namespace BlackJack
             deck.ProbabilityOfHighCard();
         }
 
-        private static void PlayTheGame(IDeck deck, Display display)
+        private static void PlayTheGame(Deck deck, Display display)
         {
             string playAgain = "y";
-            
             Console.WriteLine("");
             List<Player> players = new List<Player>();
             players.Add(new Player("Daniel",500, display, false));
@@ -117,7 +116,6 @@ namespace BlackJack
         {
             bool playAgain = true;
             int timesPlayed = 0;
-
             Console.WriteLine("");
             List<Player> players = new List<Player>();
             players.Add(new Player("Daniel", 500, display, true));
@@ -151,22 +149,61 @@ namespace BlackJack
             Console.ReadLine();
         }
 
-        private static void SetCustomDeck(out Deck deck, IDisplay disp)
+        private static void SetCustomDeck(out Deck deck, Deck originalDeck, Display disp)
         {
-            List<ICard> customDeck = CustomDeck.GetXml();
-            deck = new Deck(customDeck, disp);
-
+            if (!customMode)
+            {
+                try
+                {
+                    List<ICard> customDeck = CustomDeck.GetXml();
+                    deck = new Deck(customDeck, disp);
+                    customMode = true;
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Successfully loaded custom deck!!");
+                }
+                catch (Exception ex)
+                {
+                    customMode = false;
+                    deck = originalDeck;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Failed to load the custom deck!!");
+                }
+            }
+            else
+            {
+                deck = originalDeck;
+                customMode = false;
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Successfully loaded random deck!!");
+            }
+            Console.ForegroundColor = ConsoleColor.White;
+            Thread.Sleep(800);
+            Console.Clear();
+            Thread.Sleep(800);
         }
 
         private static void DisplayOptions()
         {
             Console.Clear();
             Console.WriteLine("Black Jack Game!");
+            if (customMode)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Using custom deck");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
             Console.WriteLine("---------------------------");
             Console.WriteLine("Choose from the following options:");
             Console.WriteLine("1. Play Game");
-            Console.WriteLine("2. Infinite Autoplay");
-            Console.WriteLine("5. Use a custom deck");
+            Console.WriteLine("2. Simulation");
+            if (customMode)
+            {
+                Console.WriteLine("5. Revert to Random Deck");
+            }
+            else
+            {
+                Console.WriteLine("5. Use a Custom Deck");
+            }
             Console.WriteLine("9. Exit...");
         }
     }

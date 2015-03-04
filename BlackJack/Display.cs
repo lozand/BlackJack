@@ -11,10 +11,7 @@ namespace BlackJack
     {
         public Display()
         {
-            //Message = "";
         }
-
-        // DAL: TODO: This class should be interface'd.
 
         const string good = "good",
             bad = "bad",
@@ -243,7 +240,7 @@ namespace BlackJack
 
         public void Wait()
         {
-            Thread.Sleep(500);
+            Thread.Sleep(1);
         }
 
         private void Set(string state = "")

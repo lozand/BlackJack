@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <cards>
+  <!-- The amount of cards in this deck needs to at leaset be 20 (i.e. less than the minimum deck threshold) -->
   <card>A</card>
   <card>5</card>
   <card>K</card>

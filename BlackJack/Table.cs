@@ -38,6 +38,7 @@ namespace BlackJack
             Results();
             ClearHand();
         }
+
         public void SetInitialBets()
         {
             Deck.ProbabilityOfGettingBlackJack();
