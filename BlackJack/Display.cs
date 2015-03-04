@@ -240,7 +240,7 @@ namespace BlackJack
 
         public void Wait()
         {
-            Thread.Sleep(1);
+            Thread.Sleep(500);
         }
 
         private void Set(string state = "")

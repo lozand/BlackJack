@@ -28,3 +28,6 @@ D:\Libraries\Documents\Projects\BlackJack\BlackJack\bin\Debug\BlackJack.exe
 D:\Libraries\Documents\Projects\BlackJack\BlackJack\obj\x86\Debug\BlackJack.exe.manifest
 D:\Libraries\Documents\Projects\BlackJack\BlackJack\obj\x86\Debug\BlackJack.application
 D:\Libraries\Documents\Projects\BlackJack\BlackJack\obj\x86\Debug\BlackJack.exe
+C:\Users\dlozano2\Documents\BlackJack\BlackJack\bin\Debug\BlackJack.exe.config
+C:\Users\dlozano2\Documents\BlackJack\BlackJack\obj\x86\Debug\BlackJack.exe
+C:\Users\dlozano2\Documents\BlackJack\BlackJack\obj\x86\Debug\BlackJack.pdb
