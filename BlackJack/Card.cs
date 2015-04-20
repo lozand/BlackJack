@@ -10,7 +10,7 @@ namespace BlackJack
     {
         public Card(string name, Suit suit)
         {
-            Initialize(name, suit, new Display());
+            Initialize(name, suit, new Display(500));
         }
 
         public Card(string name, Suit suit, IDisplay display)

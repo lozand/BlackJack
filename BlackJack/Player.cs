@@ -14,7 +14,7 @@ namespace BlackJack
         }
         public Player(string name, double cash, bool isAI = false)
         {
-            Initialize(name, cash, new Display(), isAI);
+            Initialize(name, cash, new Display(500), isAI);
         }
 
         public string Name { get; set; }

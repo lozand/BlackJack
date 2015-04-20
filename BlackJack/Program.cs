@@ -12,7 +12,8 @@ namespace BlackJack
         public static bool customMode = false;
         static void Main(string[] args)
         {
-            Display show = new Display();
+            int displaySpeed = 500;
+            Display show = new Display(displaySpeed);
             Deck myDeck = new Deck(3, show);
             Deck originalDeck = myDeck;
             //myDeck.ShowCardsRemaining();
@@ -42,7 +43,8 @@ namespace BlackJack
                         Program.SetCustomDeck(out myDeck, originalDeck, show);
                         break;
                     case Infinite:
-                        Program.Infinite(myDeck, show);
+                        Display simDisp = new Display(100);
+                        Program.Infinite(new Deck(3, simDisp), simDisp);
                         break;
                     case PlayGame:
                         Program.PlayTheGame(myDeck, show);
@@ -114,6 +116,7 @@ namespace BlackJack
 
         private static void Infinite(IDeck deck, Display display)
         {
+            
             bool playAgain = true;
             int timesPlayed = 0;
             Console.WriteLine("");
@@ -122,7 +125,7 @@ namespace BlackJack
             players.Add(new Player("Matt", 500, display, true));
             players.Add(new Player("John", 500, display, true));
             players.Add(new Player("Ruben", 500, display, true));
-            Table table = new Table(deck, players);
+            Table table = new Table(deck, players, display);
             while (playAgain)
             {
                 display.SkipLine();

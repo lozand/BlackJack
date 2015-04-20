@@ -9,9 +9,12 @@ namespace BlackJack
 {
     public class Display : IDisplay
     {
-        public Display()
+        public Display(int speed)
         {
+            DisplaySpeed = speed;
         }
+
+        public int DisplaySpeed { get; set; }
 
         const string good = "good",
             bad = "bad",
@@ -240,7 +243,7 @@ namespace BlackJack
 
         public void Wait()
         {
-            Thread.Sleep(500);
+            Thread.Sleep(DisplaySpeed);
         }
 
         private void Set(string state = "")

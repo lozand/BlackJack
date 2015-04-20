@@ -10,7 +10,7 @@ namespace BlackJack
     {
         public Table(IDeck deck, List<Player> players)
         {
-            Initialize(deck, players, new Display());
+            Initialize(deck, players, new Display(500));
         }
         public Table(IDeck deck, List<Player> players, IDisplay display)
         {
