@@ -12,7 +12,7 @@ namespace Simulator
     {
         public Simulation()
         {
-            IDisplay display = new Display();
+            IDisplay display = new Display(100);
             List<Player> players = new List<Player>();
             players.Add(new Player("Daniel", 500, true));
             players.Add(new Player("Matt", 500, true));

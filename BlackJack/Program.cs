@@ -43,7 +43,7 @@ namespace BlackJack
                         Program.SetCustomDeck(out myDeck, originalDeck, show);
                         break;
                     case Infinite:
-                        Display simDisp = new Display(100);
+                        Display simDisp = new Display(100, true);
                         Program.Infinite(new Deck(3, simDisp), simDisp);
                         break;
                     case PlayGame:
@@ -116,7 +116,6 @@ namespace BlackJack
 
         private static void Infinite(IDeck deck, Display display)
         {
-            
             bool playAgain = true;
             int timesPlayed = 0;
             Console.WriteLine("");

@@ -9,11 +9,6 @@ namespace BlackJack
 {
     public class CustomDeck
     {
-        //public CustomDeck()
-        //{
-        //    List<ICard> deck = new List<ICard>();
-        //}
-
         internal static List<ICard> GetXml()
         {
             List<ICard> newDeck = new List<ICard>();
@@ -26,7 +21,6 @@ namespace BlackJack
 
                 newDeck.Add(thisCard);
             }
-
             return newDeck;
         }
     }

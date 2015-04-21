@@ -1,6 +1,7 @@
 ﻿using BlackJack.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -9,12 +10,19 @@ namespace BlackJack
 {
     public class Display : IDisplay
     {
-        public Display(int speed)
+        public Display(int speed, bool writeToFile = false)
         {
+            IsWriting = false;
             DisplaySpeed = speed;
+            if (writeToFile)
+            {
+                Initialize();
+            }
         }
 
         public int DisplaySpeed { get; set; }
+
+        public bool IsWriting { get; set; }
 
         const string good = "good",
             bad = "bad",
@@ -23,11 +31,46 @@ namespace BlackJack
             redCard = "redcard",
             question = "question";
 
+        string fileName = "D:\\Simulation.txt";
+
         private static string Message { get; set; }
 
         public void DisplayMessage()
         {
             Console.WriteLine(Message);
+        }
+
+        public void WriteToFile(string text, string level)
+        {
+            bool successfulWrite = false;
+            while (!successfulWrite)
+            {
+                if (!IsWriting)
+                {
+                    IsWriting = true;
+                    Set(level);
+                    Console.WriteLine(text);
+                    Reset();
+                    using (StreamWriter sw = File.AppendText(fileName))
+                    {
+                        sw.Write(text);
+                        sw.WriteLine("");
+                    }
+                    IsWriting = false;
+                    successfulWrite = true;
+                }
+            }
+        }
+
+        public void Initialize()
+        {
+            if (File.Exists(fileName))
+            {
+                File.Delete(fileName);
+            }
+            using (FileStream fs = File.Create(fileName))
+            {
+            }
         }
 
         public void AddToMessage(string content)

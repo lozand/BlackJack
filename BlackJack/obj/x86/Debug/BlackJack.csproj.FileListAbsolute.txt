@@ -21,6 +21,9 @@ D:\Libraries\Documents\Visual Studio 2010\BlackJack\BlackJack\bin\Debug\BlackJac
 D:\Libraries\Documents\Projects\BlackJack\BlackJack\obj\x86\Debug\BlackJack.pdb
 D:\Libraries\Documents\Projects\BlackJack\BlackJack\bin\Debug\BlackJack.pdb
 D:\Libraries\Documents\Projects\BlackJack\BlackJack\obj\x86\Debug\BlackJack.csprojResolveAssemblyReference.cache
+C:\Users\dlozano2\Documents\BlackJack\BlackJack\bin\Debug\BlackJack.exe.config
+C:\Users\dlozano2\Documents\BlackJack\BlackJack\obj\x86\Debug\BlackJack.exe
+C:\Users\dlozano2\Documents\BlackJack\BlackJack\obj\x86\Debug\BlackJack.pdb
 D:\Libraries\Documents\Projects\BlackJack\BlackJack\bin\Debug\BlackJack.exe.config
 D:\Libraries\Documents\Projects\BlackJack\BlackJack\bin\Debug\BlackJack.exe.manifest
 D:\Libraries\Documents\Projects\BlackJack\BlackJack\bin\Debug\BlackJack.application
@@ -28,6 +31,3 @@ D:\Libraries\Documents\Projects\BlackJack\BlackJack\bin\Debug\BlackJack.exe
 D:\Libraries\Documents\Projects\BlackJack\BlackJack\obj\x86\Debug\BlackJack.exe.manifest
 D:\Libraries\Documents\Projects\BlackJack\BlackJack\obj\x86\Debug\BlackJack.application
 D:\Libraries\Documents\Projects\BlackJack\BlackJack\obj\x86\Debug\BlackJack.exe
-C:\Users\dlozano2\Documents\BlackJack\BlackJack\bin\Debug\BlackJack.exe.config
-C:\Users\dlozano2\Documents\BlackJack\BlackJack\obj\x86\Debug\BlackJack.exe
-C:\Users\dlozano2\Documents\BlackJack\BlackJack\obj\x86\Debug\BlackJack.pdb
