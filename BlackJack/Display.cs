@@ -16,12 +16,17 @@ namespace BlackJack
             DisplaySpeed = speed;
             if (writeToFile)
             {
+                RunningSimulation = true;
                 Initialize();
+            }
+            else
+            {
+                RunningSimulation = false;
             }
         }
 
         public int DisplaySpeed { get; set; }
-
+        public bool RunningSimulation { get; set; }
         public bool IsWriting { get; set; }
 
         const string good = "good",
@@ -62,6 +67,17 @@ namespace BlackJack
             }
         }
 
+        public void Write(string text, string level)
+        {
+            Set(level);
+            Console.WriteLine(text);
+            Reset();
+            if (RunningSimulation)
+            {
+                WriteToFile(text, level);
+            }
+        }
+
         public void Initialize()
         {
             if (File.Exists(fileName))
@@ -91,9 +107,7 @@ namespace BlackJack
 
         public void Error(string message)
         {
-            Set(bad);
-            AddToMessage(message);
-            Reset();
+            Write(message, bad);
         }
 
         public void PlayerResult(string name, string result)
