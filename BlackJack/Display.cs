@@ -113,27 +113,28 @@ namespace BlackJack
         public void PlayerResult(string name, string result)
         {
             string punctuation = ".";
+			string level = "";
             if (name == "Dealer")
             {
-                if (result == "bust") { Set(good); } else { Set(info); }
-                Console.WriteLine("Dealer {0}", result);
+                if (result == "bust") { level = good; } else { level = info; }
+                Write(String.Format("Dealer {0}", result), level);
             }
             else
             {
                 if (result.ToLower() == "won")
                 {
-                    Set(good);
+                    level = good;
                     punctuation = "!";
                 }
                 else if (result.ToLower() == "lost")
                 {
-                    Set(bad);
+                    level = bad;
                 }
                 else
                 {
-                    Set(info);
+                    level = info;
                 }
-                Console.WriteLine("Player {0} {1}{2}", name, result, punctuation);
+                Write(String.Format("Player {0} {1}{2}", name, result, punctuation), level);
             }
             Reset();
         }
@@ -145,17 +146,13 @@ namespace BlackJack
 
         public void PlayerBet(string name, double bet)
         {
-            Set(info);
-            Console.WriteLine("Player {0} has bet {1}", name, bet.ToString());
-            Reset();
+			Write(String.Format("Player {0} has bet {1}", name, bet.ToString()), info);
         }
 
-        public void PlayerBust()
-        {
-            Set(bad);
-            Console.WriteLine("Bust!!");
-            Reset();
-        }
+		public void PlayerBust()
+		{
+			Write(String.Format("Bust!!"),bad);
+		}
 
         public void PlayerHasBust(string name, double bet)
         {
