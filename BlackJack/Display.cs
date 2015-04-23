@@ -67,7 +67,7 @@ namespace BlackJack
             }
         }
 
-        public void Write(string text, string level)
+        public void Write(string text, string level = "")
         {
             Set(level);
             Console.WriteLine(text);
@@ -154,61 +154,45 @@ namespace BlackJack
 			Write(String.Format("Bust!!"),bad);
 		}
 
-        public void PlayerHasBust(string name, double bet)
-        {
-            Set(bad);
-            Console.WriteLine("Player {0} bust and lost ${1}", name, bet);
-            Reset();
-        }
+		public void PlayerHasBust(string name, double bet)
+		{
+			Write(String.Format("Player {0} bust and lost ${1}", name, bet), bad);
+		}
 
-        public void PlayerHasWon(string name, double bet)
-        {
-            Set(good);
-            Console.WriteLine("Player {0} won ${1} with these cards:", name, bet);
-            Reset();
-        }
+		public void PlayerHasWon(string name, double bet)
+		{
+			Write(String.Format("Player {0} won ${1} with these cards:", name, bet), good);
+		}
 
         public void PlayerHasTied(string name)
         {
-            Set(info);
-            Console.WriteLine("Player {0} tied", name);
-            Reset();
+            Write(String.Format("Player {0} tied", name), info);
         }
 
         public void PlayerGotBlackJack(string name, double bet)
         {
-            Set(good);
-            Console.WriteLine("Player {0} got Black Jack and won ${1}!!!", name, bet);
-            Reset();
+            Write(String.Format("Player {0} got Black Jack and won ${1}!!!", name, bet), good);
         }
 
         public void PlayerCash(string name, double cash)
         {
-            Set(info);
-            Console.WriteLine("Player {0} has ${1} now.", name, cash);
-            Reset();
+            Write(String.Format("Player {0} has ${1} now.", name, cash), info);
         }
 
         public void PlayerNotEnoughCash(string name, double bet, double cash)
         {
-            Set(info);
-            Console.WriteLine("You tried to bet ${0}, but you only have ${1}", bet, cash);
-            Reset();
+            Write(String.Format("You tried to bet ${0}, but you only have ${1}", bet, cash), info);
         }
 
-        public void DealerWins()
-        {
-            Set(bad);
-            Console.WriteLine("Oh no! Dealer wins!!");
-            Reset();
-        }
+		public void DealerWins()
+		{
+			Write(String.Format("Oh no! Dealer wins!!"), bad);
+		}
 
-        public void PlayerWins(string name)
-        {
-            Set("good");
-            Console.WriteLine("Woo! Player {0} wins!!", name);
-            Reset();
-        }
+		public void PlayerWins(string name)
+		{
+			Write(String.Format("Woo! Player {0} wins!!", name), good);
+		}
 
         public void PlayerCards(string name)
         {
@@ -292,7 +276,7 @@ namespace BlackJack
 
         public void SkipLine()
         {
-            Console.WriteLine("");
+            Write("");
         }
 
         public void Wait()
