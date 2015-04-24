@@ -45,7 +45,7 @@ namespace BlackJack
             Console.WriteLine(Message);
         }
 
-        public void WriteToFile(string text, string level)
+        public void WriteToFile(string text)
         {
             bool successfulWrite = false;
             while (!successfulWrite)
@@ -53,12 +53,9 @@ namespace BlackJack
                 if (!IsWriting)
                 {
                     IsWriting = true;
-                    Set(level);
-                    Console.WriteLine(text);
-                    Reset();
                     using (StreamWriter sw = File.AppendText(fileName))
                     {
-                        sw.Write(text);
+                        sw.WriteLine(text);
                         sw.WriteLine("");
                     }
                     IsWriting = false;
@@ -74,7 +71,7 @@ namespace BlackJack
             Reset();
             if (RunningSimulation)
             {
-                WriteToFile(text, level);
+                WriteToFile(text);
             }
         }
 
@@ -196,82 +193,64 @@ namespace BlackJack
 
         public void PlayerCards(string name)
         {
-            Set("info");
-            Console.WriteLine("Player {0} has these cards", name);
-            Reset();
+            Write(String.Format("Player {0} has these cards", name), info);            
         }
 
         public void PlayerCardsInPlay(string name)
         {
-            Set("info");
-            Console.WriteLine("Player {0} has these cards     <-------", name);
-            Reset();
+            Write(String.Format("Player {0} has these cards     <-------", name), info);
         }
 
         public void DealerCard(string name)
         {
-            Set("info");
-            Console.WriteLine("{0} has these cards", name);
-            Reset();
+            Write(String.Format("{0} has these cards", name), info);
         }
 
         public void PlayerOptions(string name)
         {
-            Set("info");
-            Console.WriteLine("Player {0} to move. You may Hit, Stand or Double", name);
-            Reset();
+            Write(String.Format("Player {0} to move. You may Hit, Stand or Double", name), info);
         }
 
         public void PlayerToBet(string name, string amount)
         {
-            Set(question);
-            SkipLine();
-            Console.WriteLine("How much does Player {0} want to bet? ({0} has ${1} left.)", name, amount);
-            Reset();
+            //SkipLine();
+            Write(String.Format("How much does Player {0} want to bet? ({0} has ${1} left.)", name, amount), question);
         }
 
         public void Card(string name, string suit, string suitSymbol)
         {
+            string cardType = "";
             if (suit == "Hearts" || suit == "Diamonds")
             {
-                Set("redcard");
+                cardType = "redcard";
             }
             else
             {
-                Set("blackcard");
+                cardType = "blackcard";
             }
-            Console.WriteLine("{0} - {1}", name, suitSymbol);
-            Reset();
+            Write(String.Format("{0} - {1}", name, suitSymbol), cardType);
         }
 
         public void Total(int total)
         {
-            Set("blackcard");
-            Console.WriteLine("Total: {0}", total.ToString());
-            Reset();
+            Write(String.Format("Total: {0}", total.ToString()), blackCard);
         }
 
         public void CardsRemaining(int count)
         {
-            Set("info");
-            Console.WriteLine("{0} cards remaining in this deck.", count);
-            Reset();
+            Write(String.Format("{0} cards remaining in this deck.", count), info);
         }
 
         public void AskDecksToCreate()
         {
-            Set("question");
-            Console.WriteLine("How many decks to Create?");
-            Reset();
+            Write(String.Format("How many decks to Create?"), question);
         }
 
         public void ProbabilityOfCards(double probability)
         {
-            Set(info);
             //Console.WriteLine("Probability of getting these cards is {0}%.", probability);
             string message = String.Format("Probability of getting these cards is {0}%.", probability);
             AddToMessage(message);
-            Reset();
         }
 
         public void SkipLine()
