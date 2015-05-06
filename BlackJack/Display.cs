@@ -36,7 +36,7 @@ namespace BlackJack
             redCard = "redcard",
             question = "question";
 
-        string fileName = "D:\\Simulation.txt";
+        string fileName = "C:\\Simulation.csv";
 
         private static string Message { get; set; }
 
@@ -47,21 +47,21 @@ namespace BlackJack
 
         public void WriteToFile(string text)
         {
-            bool successfulWrite = false;
-            while (!successfulWrite)
-            {
-                if (!IsWriting)
-                {
-                    IsWriting = true;
-                    using (StreamWriter sw = File.AppendText(fileName))
-                    {
-                        sw.WriteLine(text);
-                        sw.WriteLine("");
-                    }
-                    IsWriting = false;
-                    successfulWrite = true;
-                }
-            }
+			bool successfulWrite = false;
+			while (!successfulWrite)
+			{
+				if (!IsWriting)
+				{
+					IsWriting = true;
+					using (StreamWriter sw = File.AppendText(fileName))
+					{
+						sw.WriteLine(text);
+						sw.WriteLine("");
+					}
+					IsWriting = false;
+					successfulWrite = true;
+				}
+			}
         }
 
         public void Write(string text, string level = "")
@@ -69,10 +69,10 @@ namespace BlackJack
             Set(level);
             Console.WriteLine(text);
             Reset();
-            if (RunningSimulation)
-            {
-                WriteToFile(text);
-            }
+			//if (RunningSimulation)
+			//{
+			//	WriteToFile(text);
+			//}
         }
 
         public void Initialize()

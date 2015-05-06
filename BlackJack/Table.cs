@@ -36,6 +36,7 @@ namespace BlackJack
             Play();
             EndGame();
             Results();
+			WriteResultsToFile();
             ClearHand();
         }
 
@@ -183,6 +184,11 @@ namespace BlackJack
         {
             UpdateTable(false);
         }
+
+		public void WriteResultsToFile()
+		{
+			//do cool stuff here
+		}
 
         public void ClearHand()
         {
