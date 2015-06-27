@@ -26,19 +26,10 @@ namespace BlackJack
 
             var choice = Console.ReadLine();
 
-            while (choice.ToLower() != Exit.ToLower())
+			while (choice.ToLower() != Exit.ToLower())
             {
                 switch (choice.ToLower())
                 {
-                    //case Deal:
-                    //    Program.DealCard(myDeck);
-                    //    break;
-                    //case ProbabilityOfHighCard:
-                    //    Program.ProbabilityOfHighCard(myDeck);
-                    //    break;
-                    //case PlayCard:
-                    //    Program.PlayCard(myDeck);
-                    //    break;
                     case CustomDeck:
                         Program.SetCustomDeck(out myDeck, originalDeck, show);
                         break;
